@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
 
-def login(request):
+def login_view(request):
 	if request.user.is_authenticated:
 		return redirect('/home')
 
@@ -29,6 +29,6 @@ def login(request):
 
 
 @login_required
-def home(request):
+def home_view(request):
 	print(request.user.username)
 	return render(request, 'home.html')
