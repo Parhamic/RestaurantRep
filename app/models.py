@@ -12,6 +12,7 @@ class Employee(AbstractUser):
 		    ("can_add_payments", "Can add payments"),
 		)
 
+	jobTitle = models.CharField(max_length=64, default='مدیر')
 	salary = models.IntegerField(default=0)
 	workStart = models.TimeField(blank=True, null=True)
 	workEnd = models.TimeField(blank=True, null=True)
