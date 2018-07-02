@@ -4,8 +4,8 @@
 {% for item in items %}
   <div class="item" style="item">
     <div class="desc">{{ item.name }}</div>
-    <form id="frm2" name="form2" action="">
-    <input id="item2" type="number" name="counts" min="0" value="0" onchange="myFunction2()" oninput="myFunction2()">
+    <form name="form2" action="">
+    <input type="number" name="counts" min="0" value="0" oninput="order() , calPrice()" oninput="myFunction2()">
     <input class="hidden" type="number" name="price" value="{{ item.price }}">
     <label for="price">{{ item.price }}</label>
     </form>
@@ -15,23 +15,16 @@
 <div class="clear">
 
 </div>
-<button id="btn1" name="subject" value="fav_CSS">ثبت سفارش</button>
+<button id="btn1" onclick="order()" name="subject" value="fav_CSS">ثبت سفارش</button>
 
-<p id="demo" style="border:1px solid black; color:black; width:50%; margin:0 auto;"></p>
+<p id="showPrice" style="border:1px solid black; color:black; width:50%; margin:0 auto;"></p>
 
 <script>
-// function myFunction() {
-//   var count = 0;
-//   var elements = document.getElementById("frm1").elements;
-//   for (var i = 0, element; element = elements[i++];) {
-//       if (element.type === "number")
-//           count += parseInt(element.value);
-//   }
-//     var x = document.getElementById("item1").value;
-//     document.getElementById("demo").innerHTML = count;
-// }
-myFunction2();
-function myFunction2() {
+calPrice();
+function reset(){
+  document.getElementById("showPrice").innerHTML = "جمع پرداختی:0";
+}
+function calPrice() {
   var formsCollection;
   var r;
   var count=0;
@@ -42,7 +35,24 @@ function myFunction2() {
         var x = parseInt(formsCollection[r]["counts"].value) * parseInt(formsCollection[r]["price"].value);
         count += x;
   }
-  document.getElementById("demo").innerHTML = "جمع پرداختی:" + count ;
+  document.getElementById("showPrice").innerHTML = "جمع پرداختی:" + count ;
+}
+function order() {
+  var items=document.querySelectorAll(".desc");
+  console.log(items.length)
+  var r;
+  var orders = "";
+  var counts = "";
+  for(r=0;r<items.length;r++)
+  {
+        var x = parseInt(items[r].parentElement.querySelector('input[name="counts"]').value) ;
+        if (x>0) {
+          orders += items[r].innerHTML + ",";
+          counts += x + ",";
+        }
+  }
+  reset();
+  // document.getElementById("demo").innerHTML = "جمع پرداختی:" + count ;
 }
 </script>
 {% endblock %}
