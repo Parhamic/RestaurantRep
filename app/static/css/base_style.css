@@ -74,11 +74,56 @@ a:hover{
   border-radius: 10px;
   background: linear-gradient(to bottom right, rgb(150,100,100),gray);
   margin: 0 auto;
-  padding: 20px;
   color: white;
   height: 500px;
   width:100%;
 }
+/*input field*/
+input {
+
+	border:1px solid rgba(255,255,255,.5);
+	padding:.25em .5em .3125em;
+	color:rgba(255,255,255,.5);
+	border-radius:.25em;
+	background:transparent;
+	transition:all .100s;
+
+	&:focus{
+		outline:none;
+		color:rgba(255,255,255,.75);
+		border-color:rgba(255,255,255,.75);
+	}
+
+	&.keyup {
+		color:white;
+		border-color:white;
+		text-shadow:0 0 .125em white;
+		box-shadow:0 0 .25em white,inset 0 0 .25em white;
+	}
+}
+
+input:focus::-webkit-input-placeholder {
+	opacity:.5;
+}
+
+::-moz-placeholder {
+	color:$placeholder-color;
+	text-shadow:0 0 .125em transparent;
+	transition:all .25s;
+}
+input:focus::-moz-placeholder {
+	opacity:.5;
+}
+
+:-ms-input-placeholder {
+	color:$placeholder-color;
+	text-shadow:0 0 .125em transparent;
+	transition:all .25s;
+}
+input:focus:-ms-input-placeholder {
+	opacity:.5;
+}
+
 .hidden{
   display: none;
 }
