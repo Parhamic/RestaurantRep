@@ -1,0 +1,4 @@
+- Add Customer Field in Order
+- Order List Page / Employees Page
+- Design Base and stuff and font and shit
+- Add start job button

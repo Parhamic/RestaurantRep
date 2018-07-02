@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-from .models import Employee, Item, ItemInOrder, Customer
+from .models import Employee, Item, ItemInOrder, Customer, Order
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 def login_view(request):
 	if request.user.is_authenticated:
@@ -42,15 +43,15 @@ def logout_view(request):
 
 @login_required
 def home_view(request):
-	print(request.user.username)
 	return render(request, 'home.html')
 
 @login_required
 def order_view(request):
-	message = ''
 	if request.method == 'POST':
 		items = request.POST['items'].split(',')
 		counts = request.POST['counts'].split(',')
+
+		print (request.POST)
 
 		# create the order
 		order = Order.objects.create()
@@ -65,9 +66,11 @@ def order_view(request):
 			if itemName == '':
 				continue
 			item = Item.objects.get(name=itemName)
-			item_in_order = ItemInOrder.objects.create(item=item, order=order, count=int(counts[i]))
+			item_in_order = ItemInOrder.objects.create(item=item, order=order, number=int(counts[i]))
 			i += 1
-		message = 'success'
+		response = {'succeed':'true'}
+		return JsonResponse(response)
+
 
 	items = Item.objects.filter(in_menu=True)
-	return render(request, 'order.html', {'items':items}, {'message':message})
+	return render(request, 'order.html', {'items':items})
