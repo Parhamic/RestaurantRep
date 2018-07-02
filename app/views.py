@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-from .models import Employee, Item
+from .models import Employee, Item, ItemInOrder, Customer
 from django.urls import reverse_lazy
 
 def login_view(request):
@@ -47,5 +47,27 @@ def home_view(request):
 
 @login_required
 def order_view(request):
+	message = ''
+	if request.method == 'POST':
+		items = request.POST['items'].split(',')
+		counts = request.POST['counts'].split(',')
+
+		# create the order
+		order = Order.objects.create()
+
+		# set the orderer
+		if request.POST['customer'] != '':
+			customer = Customer.objects.get_or_create(name=request.POST['customer'])
+			order.orderer = customer
+
+		i = 0
+		for itemName in items:
+			if itemName == '':
+				continue
+			item = Item.objects.get(name=itemName)
+			item_in_order = ItemInOrder.objects.create(item=item, order=order, count=int(counts[i]))
+			i += 1
+		message = 'success'
+
 	items = Item.objects.filter(in_menu=True)
-	return render(request, 'order.html', {'items':items})
+	return render(request, 'order.html', {'items':items}, {'message':message})
