@@ -28,18 +28,18 @@ class Customer(models.Model):
 	isVIP = models.BooleanField(default=False)
 
 class Item(models.Model): # Food menu items
-	name = models.CharField(max_length=64)
+	name = models.CharField(max_length=64, primary_key=True)
 	price = models.IntegerField(default=0)
 
 class Order(models.Model):
-	orderer = models.ForeignKey(Customer, blank=True, null=True, on_delete=models.CASCADE)
-	items = models.ManyToManyField(Item)
+	orderer = models.ForeignKey(Customer, blank=True, null=True, on_delete=models.SET_NULL)
 	orderTime = models.DateTimeField(auto_now_add=True)
-	
+
 	ORDER_STATES = (
         ('WT', 'Waiting'), # waiting for the chef to confirm
+        ('RJ', 'Rejected'), # Rejected by the chef
         ('CM', 'Confirmed'), # confirmed by the chef
-        ('RD', 'Ready'), # ready
+        ('RD', 'Ready') # ready
     )
 	state = models.CharField(
 		max_length=2,
@@ -47,6 +47,10 @@ class Order(models.Model):
 		default='WT',
 	)
 
+class ItemInOrder(models.Model): # Items in orders
+	item = models.ForeignKey(Item, on_delete=models.CASCADE)
+	Order = models.ForeignKey(Order, on_delete=models.CASCADE)
+	number = models.IntegerField(default=0) # how many of this item is ordered
 
 class Supply(models.Model):
 	name = models.CharField(max_length=64)
