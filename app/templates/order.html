@@ -1,98 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="item" style="item">
-  <div class="desc">
-    item2
+{% for item in items %}
+  <div class="item" style="item">
+    <div class="desc">{{ item.name }}</div>
+    <form id="frm2" name="form2" action="">
+    <input id="item2" type="number" name="counts" min="0" value="0" onchange="myFunction2()" oninput="myFunction2()">
+    <input class="hidden" type="number" name="price" value="{{ item.price }}">
+    <label for="price">{{ item.price }}</label>
+    </form>
   </div>
-  <form id="frm2" name="form2" action="">
-  <input id="item2" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="200">
-  <label for="price">200</label>
-  </form>
-</div>
-
-<div class="item" style="item">
-  <div class="desc">
-    item2
-  </div>
-  <form id="frm2" name="form" action="">
-  <input id="item1" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="100">
-  <label for="price">100</label>
-  </form>
-</div>
-
-<div class="item" style="item">
-  <div class="desc">
-    item3
-  </div>
-  <form id="frm3" name="form" action="">
-  <input id="item3" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="500">
-  <label for="price">500</label>
-  </form>
-</div>
-<div class="item" style="item">
-  <div class="desc">
-    item4
-  </div>
-  <form id="frm4" name="form" action="">
-  <input id="item4" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="50">
-  <label for="price">50</label>
-  </form>
-</div>
-
-<div class="item" style="item">
-  <div class="desc">
-    item5
-  </div>
-  <form id="frm2" name="form2" action="">
-  <input id="item2" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="200">
-  <label for="price">200</label>
-  </form>
-</div>
-
-<div class="item" style="item">
-  <div class="desc">
-    item6
-  </div>
-  <form id="frm2" name="form" action="">
-  <input id="item1" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="100">
-  <label for="price">100</label>
-  </form>
-</div>
-
-<div class="item" style="item">
-  <div class="desc">
-    item7
-  </div>
-  <form id="frm3" name="form" action="">
-  <input id="item3" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="600">
-  <label for="price">600</label>
-  </form>
-</div>
-<div class="item" style="item">
-  <div class="desc">
-    item8
-  </div>
-  <form id="frm4" name="form" action="">
-  <input id="item4" type="number" name="counts" value="1">
-  <input class="hidden" type="number" name="price" value="250">
-  <label for="price">250</label>
-  </form>
-</div>
+{% endfor %}
 
 <div class="clear">
 
 </div>
-<button id="btn1" name="subject" onclick="myFunction2()" value="fav_CSS">ثبت سفارش</button>
+<button id="btn1" name="subject" value="fav_CSS">ثبت سفارش</button>
 
-<p id="demo" style="border:1px solid black; color:black; width:50%; margin:0 auto;">جمع پرداختی:</p>
+<p id="demo" style="border:1px solid black; color:black; width:50%; margin:0 auto;"></p>
 
 <script>
 // function myFunction() {
@@ -105,6 +30,7 @@
 //     var x = document.getElementById("item1").value;
 //     document.getElementById("demo").innerHTML = count;
 // }
+myFunction2();
 function myFunction2() {
   var formsCollection;
   var r;

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-from .models import Employee
+from .models import Employee, Item
 from django.urls import reverse_lazy
 
 def login_view(request):
@@ -47,4 +47,5 @@ def home_view(request):
 
 @login_required
 def order_view(request):
-	return render(request, 'home.html')
+	items = Item.objects.filter(in_menu=True)
+	return render(request, 'order.html', {'items':items})

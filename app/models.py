@@ -30,6 +30,7 @@ class Customer(models.Model):
 class Item(models.Model): # Food menu items
 	name = models.CharField(max_length=64, primary_key=True)
 	price = models.IntegerField(default=0)
+	in_menu = models.BooleanField(default=True)
 
 class Order(models.Model):
 	orderer = models.ForeignKey(Customer, blank=True, null=True, on_delete=models.SET_NULL)
@@ -49,7 +50,7 @@ class Order(models.Model):
 
 class ItemInOrder(models.Model): # Items in orders
 	item = models.ForeignKey(Item, on_delete=models.CASCADE)
-	Order = models.ForeignKey(Order, on_delete=models.CASCADE)
+	order = models.ForeignKey(Order, on_delete=models.CASCADE)
 	number = models.IntegerField(default=0) # how many of this item is ordered
 
 class Supply(models.Model):
