@@ -32,7 +32,7 @@
 <script>
 function order_change_state(order, state)
 {
-  orderID = parseInt(order.parentElement.parentElement.querySelector("#order_id").innerHTML)
+  orderID = parseInt(order.parentElement.parentElement.querySelector("#order-id").innerHTML)
   $.ajax({
         url: '{% url "order_state_change" %}',
         type:"POST",

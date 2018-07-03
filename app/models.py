@@ -40,7 +40,8 @@ class Order(models.Model):
         ('WT', 'Waiting'), # waiting for the chef to confirm
         ('RJ', 'Rejected'), # Rejected by the chef
         ('CM', 'Confirmed'), # confirmed by the chef
-        ('RD', 'Ready') # ready
+        ('RD', 'Ready'), # ready
+        ('DV', 'Delivered') # Delivered
     )
 	state = models.CharField(
 		max_length=2,

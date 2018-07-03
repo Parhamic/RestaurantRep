@@ -61,7 +61,7 @@ def order_change_view(request):
 
 @login_required
 def orderlist_view(request):
-	orders = Order.objects.filter()
+	orders = Order.objects.exclude(state='DV') # dont show delivered orders
 	states = ['RD', 'WT', 'RJ', 'CM']
 	orders = sorted(orders, key=lambda x: states.index(x.state)) # sort the orders by their states
 	return render(request, 'orderlist.html', {'orders':orders})
