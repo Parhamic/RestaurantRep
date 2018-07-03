@@ -319,6 +319,9 @@ input {
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f02727', endColorstr='#913c3c',GradientType=0);
   background-color:#f02727;
 }
+.orderitem-RM{
+  display: none;
+}
 .orderitem-name{
   width: 100%;
   text-align: center;
