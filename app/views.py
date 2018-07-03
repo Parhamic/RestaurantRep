@@ -66,15 +66,15 @@ def order_change_view(request):
 
 	if request.POST['state'] == 'CM': # add activity
 		totalPrice = 0
-		desc = 'فاکتور فروش شماره '+order.id + '\n\n'
+		desc = 'فاکتور فروش شماره '+ str(order.id) + '\n\n'
 		for item in order.items.all():
-			desc += item.item.name + "   " + item.number
+			desc += item.item.name + "   " + str(item.number)
 			totalPrice += item.item.price*item.number
 
 
 
 		Activity.objects.create(type='فروش',
-								title='فاکتور فروش شماره '+order.id,
+								title='فاکتور فروش شماره '+str(order.id),
 								description=desc,
 								moneyTrade=totalPrice)
 
