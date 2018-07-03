@@ -73,9 +73,9 @@ def order_change_view(request):
 
 
 
-		Activity.objects.create(type='فروش'
-								title='فاکتور فروش شماره '+order.id
-								description=desc
+		Activity.objects.create(type='فروش',
+								title='فاکتور فروش شماره '+order.id,
+								description=desc,
 								moneyTrade=totalPrice)
 
 	response['succeed'] = 'true'
