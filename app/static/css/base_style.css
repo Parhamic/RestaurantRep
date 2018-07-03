@@ -248,7 +248,7 @@ input {
 
 /* ordelist page styles*/
 
-.orderitem{
+.orderitem-WT{
   -moz-box-shadow:inset 0px 39px 0px -24px #eb1717;
   -webkit-box-shadow:inset 0px 39px 0px -24px #eb1717;
   box-shadow:inset 0px 39px 0px -24px #eb1717;
@@ -274,8 +274,14 @@ input {
   float:right;
   margin:0 40px 20px 0;
 }
-.orderitem-acc{
-  
+.orderitem-RD{
+
+}
+.orderitem-CM{
+
+}
+.orderitem-RJ{
+
 }
 .orderitem-name{
   width: 100%;

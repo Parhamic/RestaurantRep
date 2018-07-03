@@ -50,7 +50,7 @@ class Order(models.Model):
 
 class ItemInOrder(models.Model): # Items in orders
 	item = models.ForeignKey(Item, on_delete=models.CASCADE)
-	order = models.ForeignKey(Order, on_delete=models.CASCADE)
+	order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
 	number = models.IntegerField(default=0) # how many of this item is ordered
 
 class Supply(models.Model):

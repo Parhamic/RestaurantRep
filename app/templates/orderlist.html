@@ -1,117 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="orderitem">
-  <p class="orderitem-name">فاکتور ۱</p>
-    <table>
-    <tr>
-      <th>شرح کالا</th>
-      <th>تعداد</th>
-      <th>قیمت کل</th>
-    </tr>
-    <tr>
-      <td>کباب</td>
-      <td>1</td>
-      <td>500</td>
-    </tr>
-    <tr>
-      <td>پیتزا</td>
-      <td>3</td>
-      <td>3000</td>
-    </tr>
-    <tr>
-      <td>پیتزا</td>
-      <td>3</td>
-      <td>3000</td>
-    </tr>
-    <tr>
-      <td>پیتزا</td>
-      <td>3</td>
-      <td>3000</td>
-    </tr>
-    <tr>
-      <td>قیمت کل</td>
-      <td></td>
-      <td>3000</td>
-    </tr>
-  </table>
-  <div class="buttons">
-    <button class="btn-item acc-btn" name="accept">پذیرفتن</button>
-    <button class="btn-item rej-btn" name="accept">رد کردن</button>
+{% for order in orders %}
+  <div class="orderitem-{{ order.state }}">
+    <p class="orderitem-name">فاکتور {{ forloop.counter }}</p>
+      <!-- HIDE THIS BRO ! -->
+      <p id="order_id">{{ order.id }}</p>
+      <!--  -->
+      <table>
+        <tr>
+          <th>شرح کالا</th>
+          <th>تعداد</th>
+          <th>قیمت کل</th>
+        </tr>
+        {% for item in order.items.all %}
+        <tr>
+          <td>{{ item.item.name }}</td>
+          <td>{{ item.number }}</td>
+          <td>{% widthratio item.item.price 1 item.number %}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    <div class="buttons">
+      <button class="btn-item acc-btn" name="accept" onclick="order_change_state(this, 'CM')">پذیرفتن</button>
+      <button class="btn-item rej-btn" name="accept" onclick="order_change_state(this, 'RJ')">رد کردن</button>
+      <button class="btn-item rej-btn" name="accept" onclick="order_change_state(this, 'RD')">آماده</button>
+    </div>
   </div>
+{% endfor %}
 
-</div>
-<div class="orderitem">
-  <p class="orderitem-name">فاکتور ۱</p>
-    <table>
-    <tr>
-      <th>شرح کالا</th>
-      <th>تعداد</th>
-      <th>قیمت کل</th>
-    </tr>
-    <tr>
-      <td>دوغ</td>
-      <td>2</td>
-      <td>2000</td>
-    </tr>
-    <tr>
-      <td>کباب</td>
-      <td>1</td>
-      <td>500</td>
-    </tr>
-    <tr>
-      <td>قیمت کل</td>
-      <td></td>
-      <td>3000</td>
-    </tr>
-  </table>
-  <div class="buttons">
-    <button class="btn-item acc-btn" name="accept">پذیرفتن</button>
-    <button class="btn-item rej-btn" name="accept">رد کردن</button>
-  </div>
-</div>
-<div class="orderitem">
-  <p class="orderitem-name">فاکتور ۱</p>
-    <table>
-    <tr>
-      <th>شرح کالا</th>
-      <th>تعداد</th>
-      <th>قیمت کل</th>
-    </tr>
-    <tr>
-      <td>کباب</td>
-      <td>1</td>
-      <td>500</td>
-    </tr>
-    <tr>
-      <td>پیتزا</td>
-      <td>3</td>
-      <td>3000</td>
-    </tr>
-    <tr>
-      <th>شرح کالا</th>
-      <th>تعداد</th>
-      <th>قیمت کل</th>
-    </tr>
-    <tr>
-      <td>کباب</td>
-      <td>1</td>
-      <td>500</td>
-    </tr>
-    <tr>
-      <td>پیتزا</td>
-      <td>3</td>
-      <td>3000</td>
-    </tr>
-    <tr>
-      <td>قیمت کل</td>
-      <td></td>
-      <td>3000</td>
-    </tr>
-  </table>
-  <div class="buttons">
-    <button class="btn-item acc-btn" name="accept">پذیرفتن</button>
-    <button class="btn-item rej-btn" name="accept">رد کردن</button>
-  </div>
-</div>
+<script>
+function order_change_state(order, state)
+{
+  orderID = parseInt(order.parentElement.parentElement.querySelector("#order_id").innerHTML)
+  $.ajax({
+        url: '{% url "order_state_change" %}',
+        type:"POST",
+        data: {
+          'order_id': orderID,
+          'state':state, // Confirmed
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.succeed && data.succeed == 'true') {
+            $(order).parent().parent().attr('class', 'orderitem-'+state);
+          }
+        }
+      });
+}
+</script>
 {% endblock %}

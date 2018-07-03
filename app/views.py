@@ -46,16 +46,31 @@ def home_view(request):
 	return render(request, 'home.html')
 
 @login_required
+def order_change_view(request):
+	if request.method != 'POST':
+		return JsonResponse({}) # handle nothing
+
+	response = {}
+
+	order = Order.objects.get(id=request.POST['order_id'])
+	order.state = request.POST['state']
+	order.save()
+
+	response['succeed'] = 'true'
+	return JsonResponse(response)
+
+@login_required
 def orderlist_view(request):
-	return render(request, 'orderlist.html')
+	orders = Order.objects.filter()
+	states = ['RD', 'WT', 'RJ', 'CM']
+	orders = sorted(orders, key=lambda x: states.index(x.state)) # sort the orders by their states
+	return render(request, 'orderlist.html', {'orders':orders})
 
 @login_required
 def order_view(request):
 	if request.method == 'POST':
 		items = request.POST['items'].split(',')
 		counts = request.POST['counts'].split(',')
-
-		print (request.POST)
 
 		# create the order
 		order = Order.objects.create()
@@ -64,6 +79,7 @@ def order_view(request):
 		if request.POST['customer'] != '':
 			customer = Customer.objects.get_or_create(name=request.POST['customer'])
 			order.orderer = customer
+			order.save()
 
 		i = 0
 		for itemName in items:
