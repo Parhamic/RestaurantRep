@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class Employee(AbstractUser):
 	class Meta:
 		permissions = (
@@ -57,3 +58,7 @@ class ItemInOrder(models.Model): # Items in orders
 class Supply(models.Model):
 	name = models.CharField(max_length=64)
 	available = models.BooleanField(default=False) # do we have this supply enough?
+
+class ConfigurationModel(models.Model):
+	lastOrderToday = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL)
+	firstOrderIDToday = models.IntegerField(default=0)

@@ -2,9 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-from .models import Employee, Item, ItemInOrder, Customer, Order
+from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from datetime import date
+
+def getConfig():
+	cfg, created = ConfigurationModel.objects.get_or_create(id=1)
+	return cfg
 
 def login_view(request):
 	if request.user.is_authenticated:
@@ -64,7 +69,7 @@ def orderlist_view(request):
 	orders = Order.objects.exclude(state='DV') # dont show delivered orders
 	states = ['RD', 'WT', 'RJ', 'CM']
 	orders = sorted(orders, key=lambda x: states.index(x.state)) # sort the orders by their states
-	return render(request, 'orderlist.html', {'orders':orders})
+	return render(request, 'orderlist.html', {'orders':orders, 'orderStartFrom':-getConfig().firstOrderIDToday})
 
 @login_required
 def order_view(request):
@@ -77,7 +82,7 @@ def order_view(request):
 
 		# set the orderer
 		if request.POST['customer'] != '':
-			customer = Customer.objects.get_or_create(name=request.POST['customer'])
+			customer, created = Customer.objects.get_or_create(name=request.POST['customer'])
 			order.orderer = customer
 			order.save()
 
@@ -88,6 +93,12 @@ def order_view(request):
 			item = Item.objects.get(name=itemName)
 			item_in_order = ItemInOrder.objects.create(item=item, order=order, number=int(counts[i]))
 			i += 1
+
+		cfg = getConfig()
+		if cfg.lastOrderToday == None or order.orderTime.date() > cfg.lastOrderToday.orderTime.date(): #TODO: reset orders every day
+			cfg.lastOrderToday = order
+		cfg.save()
+
 		response = {'succeed':'true'}
 		return JsonResponse(response)
 
