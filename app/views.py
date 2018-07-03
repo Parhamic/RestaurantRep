@@ -46,6 +46,10 @@ def home_view(request):
 	return render(request, 'home.html')
 
 @login_required
+def orderlist_view(request):
+	return render(request, 'orderlist.html')
+
+@login_required
 def order_view(request):
 	if request.method == 'POST':
 		items = request.POST['items'].split(',')
