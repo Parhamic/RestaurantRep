@@ -73,6 +73,7 @@ def order_change_view(request):
 	order = Order.objects.get(id=request.POST['order_id'])
 	if request.POST['state'] == 'RM': # remove this order
 		order.delete()
+		response['succeed'] = 'true'
 	elif validStateChange(order.state, request.POST['state']): # Can we change the state?
 		order.state = request.POST['state']
 		order.save()
@@ -84,12 +85,12 @@ def order_change_view(request):
 				desc += item.item.name + "   " + str(item.number)
 				totalPrice += item.item.price*item.number
 
-		Activity.objects.create(type='فروش',
-								title='فاکتور فروش شماره '+str(order.id),
-								description=desc,
-								moneyTrade=totalPrice)
+			Activity.objects.create(type='فروش',
+									title='فاکتور فروش شماره '+str(order.id),
+									description=desc,
+									moneyTrade=totalPrice)
 
-	response['succeed'] = 'true'
+			response['succeed'] = 'true'
 	return JsonResponse(response)
 
 @login_required
