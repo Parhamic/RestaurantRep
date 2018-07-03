@@ -11,6 +11,19 @@ def getConfig():
 	cfg, created = ConfigurationModel.objects.get_or_create(id=1)
 	return cfg
 
+def validStateChange(state1, state2):
+	if state1 == state2:
+		return False
+	validChangeDic = {
+		'WT': ['RJ', 'CM'],
+		'CM': ['RD', 'DV'],
+		'RD': ['DV']
+	}
+
+	if state1 in validChangeDic and state2 in validChangeDic[state1]:
+		return True
+	return False
+
 def login_view(request):
 	if request.user.is_authenticated:
 		return redirect('/home')
@@ -60,18 +73,16 @@ def order_change_view(request):
 	order = Order.objects.get(id=request.POST['order_id'])
 	if request.POST['state'] == 'RM': # remove this order
 		order.delete()
-	else:
+	elif validStateChange(order.state, request.POST['state']): # Can we change the state?
 		order.state = request.POST['state']
 		order.save()
 
-	if request.POST['state'] == 'CM': # add activity
-		totalPrice = 0
-		desc = 'فاکتور فروش شماره '+ str(order.id) + '\n\n'
-		for item in order.items.all():
-			desc += item.item.name + "   " + str(item.number)
-			totalPrice += item.item.price*item.number
-
-
+		if request.POST['state'] == 'CM': # add activity
+			totalPrice = 0
+			desc = 'فاکتور فروش شماره '+ str(order.id) + '\n\n'
+			for item in order.items.all():
+				desc += item.item.name + "   " + str(item.number)
+				totalPrice += item.item.price*item.number
 
 		Activity.objects.create(type='فروش',
 								title='فاکتور فروش شماره '+str(order.id),
