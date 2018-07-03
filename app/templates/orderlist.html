@@ -2,22 +2,22 @@
 
 {% block content %}
 {% for order in orders %}
-  <div class="orderitem-{{ order.state }}">
+  <div class=" orderitem orderitem-{{ order.state }}">
     <p class="orderitem-name">فاکتور {{ forloop.counter }}</p>
       <!-- HIDE THIS BRO ! -->
-      <p id="order_id">{{ order.id }}</p>
+      <p id="order-id">{{ order.id }}</p>
       <!--  -->
       <table>
         <tr>
-          <th>شرح کالا</th>
-          <th>تعداد</th>
           <th>قیمت کل</th>
+          <th>تعداد</th>
+          <th>شرح کالا</th>
         </tr>
         {% for item in order.items.all %}
         <tr>
-          <td>{{ item.item.name }}</td>
-          <td>{{ item.number }}</td>
           <td>{% widthratio item.item.price 1 item.number %}</td>
+          <td>{{ item.number }}</td>
+          <td>{{ item.item.name }}</td>
         </tr>
         {% endfor %}
       </table>
@@ -44,7 +44,7 @@ function order_change_state(order, state)
         dataType: 'json',
         success: function (data) {
           if (data.succeed && data.succeed == 'true') {
-            $(order).parent().parent().attr('class', 'orderitem-'+state);
+            $(order).parent().parent().attr('class', 'orderitem orderitem-'+state);
           }
         }
       });

@@ -246,8 +246,56 @@ input {
 }
 
 /* ordelist page styles*/
-
+#order-id{
+  display: none;
+}
+.orderitem{
+  -moz-border-radius:4px;
+  -webkit-border-radius:4px;
+  border-radius:4px;
+  display:inline-block;
+  width: 25%;
+  padding: 20px 20px 10px  20px;
+  font-size:15px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #7a0c22;
+  float:right;
+  border:1px solid #ffffff;
+  margin:0 40px 20px 0;
+}
 .orderitem-WT{
+  border:1px solid #ffffff;
+  background-color:#00913c;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff7d05', endColorstr='#ffab05',GradientType=0);
+  -moz-box-shadow:inset 0px 39px 0px -24px #ff7d05;
+  -webkit-box-shadow:inset 0px 39px 0px -24px #ff7d05;
+  box-shadow:inset 0px 39px 0px -24px #ff7d05;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05,#ff7d05), color-stop(1, #ffab05));
+  background:-moz-linear-gradient(top, #ff7d05 5%, #ffab05 100%);
+  background:-webkit-linear-gradient(top, #ff7d05 5%, #ffab05 100%);
+  background:-o-linear-gradient(top, #ff7d05 5%, #ffab05 100%);
+  background:-ms-linear-gradient(top, #ff7d05 5%, #ffab05 100%);
+  background:linear-gradient(to bottom, #ff7d05 5%, #ffab05 100%);
+}
+
+.orderitem-RD{
+  border:1px solid #ffffff;
+  background-color:#00913c;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00913c', endColorstr='#00913c',GradientType=0);
+  -moz-box-shadow:inset 0px 39px 0px -24px green;
+  -webkit-box-shadow:inset 0px 39px 0px -24px green;
+  box-shadow:inset 0px 39px 0px -24px green;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, gree), color-stop(1, #00913c));
+  background:-moz-linear-gradient(top, green 5%, #00913c 100%);
+  background:-webkit-linear-gradient(top, green 5%, #00913c 100%);
+  background:-o-linear-gradient(top, green 5%, #00913c 100%);
+  background:-ms-linear-gradient(top, green 5%, #00913c 100%);
+  background:linear-gradient(to bottom, green 5%, #00913c 100%);
+}
+.orderitem-CM{
+
+}
+.orderitem-RJ{
   -moz-box-shadow:inset 0px 39px 0px -24px #eb1717;
   -webkit-box-shadow:inset 0px 39px 0px -24px #eb1717;
   box-shadow:inset 0px 39px 0px -24px #eb1717;
@@ -259,27 +307,6 @@ input {
   background:linear-gradient(to bottom, #f02727 5%, #913c3c 100%);
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f02727', endColorstr='#913c3c',GradientType=0);
   background-color:#f02727;
-  -moz-border-radius:4px;
-  -webkit-border-radius:4px;
-  border-radius:4px;
-  border:1px solid #ffffff;
-  display:inline-block;
-  width: 25%;
-  padding: 20px 20px 10px  20px;
-  font-size:15px;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #7a0c22;
-  float:right;
-  margin:0 40px 20px 0;
-}
-.orderitem-RD{
-
-}
-.orderitem-CM{
-
-}
-.orderitem-RJ{
-
 }
 .orderitem-name{
   width: 100%;
@@ -290,12 +317,11 @@ input {
 table {
     border-collapse: collapse;
     width: 100%;
-    align-items: baseline;
+    text-align: right;
 }
-tr:nth-child(even){background-color: #913c3c}
+tr:nth-child(even){background-color: gray}
 th, td {
     padding: 8px;
-    text-align: left;
     border-bottom: 1px solid #ddd;
 }
 .buttons{
