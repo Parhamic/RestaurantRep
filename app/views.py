@@ -5,7 +5,7 @@ from .forms import LoginForm
 from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel
 from django.urls import reverse_lazy
 from django.http import JsonResponse
-from datetime import date
+import datetime
 
 def getConfig():
 	cfg, created = ConfigurationModel.objects.get_or_create(id=1)
@@ -58,8 +58,11 @@ def order_change_view(request):
 	response = {}
 
 	order = Order.objects.get(id=request.POST['order_id'])
-	order.state = request.POST['state']
-	order.save()
+	if request.POST['state'] == 'RM': # remove this order
+		order.delete()
+	else:
+		order.state = request.POST['state']
+		order.save()
 
 	response['succeed'] = 'true'
 	return JsonResponse(response)
@@ -96,7 +99,8 @@ def order_view(request):
 
 		cfg = getConfig()
 		if cfg.lastOrderToday == None or order.orderTime.date() > cfg.lastOrderToday.orderTime.date(): #TODO: reset orders every day
-			cfg.lastOrderToday = order
+			cfg.firstOrderIDToday = order.id - 1
+		cfg.lastOrderToday = order
 		cfg.save()
 
 		response = {'succeed':'true'}
