@@ -90,7 +90,7 @@ def order_change_view(request):
 									description=desc,
 									moneyTrade=totalPrice)
 
-			response['succeed'] = 'true'
+		response['succeed'] = 'true'
 	return JsonResponse(response)
 
 @login_required
@@ -124,9 +124,9 @@ def order_view(request):
 			i += 1
 
 		cfg = getConfig()
-		if cfg.lastOrderToday == None or order.orderTime.date() > cfg.lastOrderToday.orderTime.date(): #TODO: reset orders every day
+		if cfg.lastOrderToday == None or order.orderTime.date() > cfg.lastOrderDate.date(): #TODO: reset orders every day
 			cfg.firstOrderIDToday = order.id - 1
-		cfg.lastOrderToday = order
+		cfg.lastOrderDate = order.orderTime
 		cfg.save()
 
 		response = {'succeed':'true'}

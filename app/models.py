@@ -62,5 +62,5 @@ class Supply(models.Model):
 	available = models.BooleanField(default=False) # do we have this supply enough?
 
 class ConfigurationModel(models.Model):
-	lastOrderToday = models.ForeignKey(Order, null=True, blank=True, on_delete=models.SET_NULL)
+	lastOrderDate = models.DateTimeField(auto_now_add=True)
 	firstOrderIDToday = models.IntegerField(default=0)
