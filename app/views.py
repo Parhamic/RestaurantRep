@@ -124,7 +124,7 @@ def order_view(request):
 			i += 1
 
 		cfg = getConfig()
-		if cfg.lastOrderToday == None or order.orderTime.date() > cfg.lastOrderDate.date(): #TODO: reset orders every day
+		if cfg.lastOrderDate == None or order.orderTime.date() > cfg.lastOrderDate.date(): #TODO: reset orders every day
 			cfg.firstOrderIDToday = order.id - 1
 		cfg.lastOrderDate = order.orderTime
 		cfg.save()
