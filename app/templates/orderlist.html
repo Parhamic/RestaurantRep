@@ -3,7 +3,7 @@
 {% block content %}
 {% for order in orders %}
   <div class=" orderitem orderitem-{{ order.state }}">
-    <p class="orderitem-name">فاکتور {{ order.id|add:orderStartFrom }}</p>
+    <p class="orderitem-name">سفارش {{ order.id|add:orderStartFrom }}</p>
       <!-- HIDE THIS BRO ! -->
       <p id="order-id">{{ order.id }}</p>
       <!--  -->
@@ -24,7 +24,8 @@
     <div class="buttons">
       <button class="btn-item acc-btn" name="accept" onclick="order_change_state(this, 'CM')">پذیرفتن</button>
       <button class="btn-item rej-btn" name="accept" onclick="order_change_state(this, 'RJ')">رد کردن</button>
-      <button class="btn-item rej-btn" name="accept" onclick="order_change_state(this, 'RD')">آماده</button>
+      <button class="btn-item ready-btn" name="readybtn" onclick="order_change_state(this, 'RD')">آماده</button>
+      <button class="btn-item delete-btn" name="deletebtn" onclick="order_change_state(this, 'RD')">حذف سفارش</button>
     </div>
   </div>
 {% endfor %}
