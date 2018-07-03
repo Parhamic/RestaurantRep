@@ -1,6 +1,15 @@
-
+@font-face {
+src: url('http://fontonline.ir/fonts/BYekan.eot?#') format('eot'),
+url('http://fontonline.ir/fonts/BYekan.ttf') format('truetype'),
+url('http://fontonline.ir/fonts/BYekan.woff') format('woff');
+}
+body *{
+  font-family: 'BYekan';
+}
+.order-container *{
+  font-family: 'BYekan';
+}
 body {
-    font-family: 'B Yekan', Helvetica, Arial, sans-serif;
     background-color: #fff;
     text-align: right;
     text-decoration: none;
@@ -49,7 +58,6 @@ a{
 	border:1px solid #ffffff;
 	display:inline-block;
   width: 15%;
-	font-family:Arial;
 	font-size:15px;
 	padding:6px 15px;
 	text-decoration:none;
@@ -98,7 +106,6 @@ a:hover{
   border:1px solid #ffffff;
   display:inline-block;
   width: 15%;
-  font-family:Arial;
   font-size:15px;
   padding:6px 15px;
   text-decoration:none;
@@ -130,7 +137,6 @@ a:hover{
 	cursor:pointer;
 	color:#ffffff;
   width: 15%;
-	font-family:Arial;
 	font-size:15px;
 	padding:6px 15px;
 	text-decoration:none;
@@ -168,7 +174,6 @@ input {
   display:inline-block;
   width: 15%;
   padding: 20px 20px 10px  20px;
-  font-family:Arial;
   font-size:15px;
   text-decoration:none;
   text-shadow:0px 1px 0px #7a0c22;
@@ -202,7 +207,6 @@ input {
   border:1px solid #ffffff;
   width: 25%;
   padding: 20px ;
-  font-family:Arial;
   font-size:15px;
   text-decoration:none;
   text-shadow:0px 1px 0px #7a0c22;
@@ -227,7 +231,6 @@ input {
   border:1px solid #ffffff;
   width: 20%;
   padding: 20px;
-  font-family:Arial;
   font-size:21px;
   text-decoration:none;
   text-shadow:0px 1px 0px #7a0c22;
@@ -267,15 +270,14 @@ input {
   display:inline-block;
   width: 25%;
   padding: 20px 20px 10px  20px;
-  font-family:Arial;
   font-size:15px;
   text-decoration:none;
   text-shadow:0px 1px 0px #7a0c22;
   float:right;
   margin:0 40px 20px 0;
 }
-.orderitem-acc{
-  
+.orderitem-aca{
+
 }
 .orderitem-name{
   width: 100%;
