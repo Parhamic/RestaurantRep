@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel
+from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 import datetime
@@ -64,6 +64,20 @@ def order_change_view(request):
 		order.state = request.POST['state']
 		order.save()
 
+	if request.POST['state'] == 'CM': # add activity
+		totalPrice = 0
+		desc = 'فاکتور فروش شماره '+order.id + '\n\n'
+		for item in order.items.all():
+			desc += item.item.name + "   " + item.number
+			totalPrice += item.item.price*item.number
+
+
+
+		Activity.objects.create(type='فروش'
+								title='فاکتور فروش شماره '+order.id
+								description=desc
+								moneyTrade=totalPrice)
+
 	response['succeed'] = 'true'
 	return JsonResponse(response)
 
@@ -94,7 +108,7 @@ def order_view(request):
 			if itemName == '':
 				continue
 			item = Item.objects.get(name=itemName)
-			item_in_order = ItemInOrder.objects.create(item=item, order=order, number=int(counts[i]))
+			itemInOrder = ItemInOrder.objects.create(item=item, order=order, number=int(counts[i]))
 			i += 1
 
 		cfg = getConfig()
@@ -107,5 +121,5 @@ def order_view(request):
 		return JsonResponse(response)
 
 
-	items = Item.objects.filter(in_menu=True)
+	items = Item.objects.filter(inMenu=True)
 	return render(request, 'order.html', {'items':items})

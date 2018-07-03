@@ -20,9 +20,11 @@ class Employee(AbstractUser):
 
 
 class Activity(models.Model): # reports, logs
+	type = models.CharField(max_length=128) # what type of activity is this ? (sell, buy, employee's report, ...)
 	title = models.CharField(max_length=128)
 	description = models.CharField(max_length=2048)
 	commitTime = models.DateTimeField(auto_now_add=True)
+	moneyTrade = models.IntegerField(default=0) # how much money this activity costs
 
 class Customer(models.Model):
 	name = models.CharField(max_length=64)
@@ -31,7 +33,7 @@ class Customer(models.Model):
 class Item(models.Model): # Food menu items
 	name = models.CharField(max_length=64, primary_key=True)
 	price = models.IntegerField(default=0)
-	in_menu = models.BooleanField(default=True)
+	inMenu = models.BooleanField(default=True)
 
 class Order(models.Model):
 	orderer = models.ForeignKey(Customer, blank=True, null=True, on_delete=models.SET_NULL)
