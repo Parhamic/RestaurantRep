@@ -15,8 +15,13 @@ class Employee(AbstractUser):
 
 	jobTitle = models.CharField(max_length=64, default='مدیر')
 	salary = models.IntegerField(default=0)
+
+	# the schedule
 	workStart = models.TimeField(blank=True, null=True)
 	workEnd = models.TimeField(blank=True, null=True)
+
+	# time he/she began to work
+	workBegan = models.TimeField(blank=True, null=True)
 
 
 class Activity(models.Model): # reports, logs

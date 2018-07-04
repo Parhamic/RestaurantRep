@@ -5,6 +5,7 @@ from .forms import LoginForm
 from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.utils import timezone
 import datetime
 
 def getConfig():
@@ -33,12 +34,12 @@ def login_view(request):
 		form = LoginForm(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data
-			employee = authenticate(username=cd['user'], password=cd['pw']) #first try to authenticate
+			employee = authenticate(username=cd['user'], password=cd['pw']) #first, try to authenticate
 			if employee is not None:
 				login(request, employee)
 				return redirect('/home')
 			else:
-				# try manually
+				# try manually TODO:remove later
 				employee = Employee.objects.filter(username=cd['user'], password=cd['pw'])
 				if employee.count() != 0:
 					login(request, employee[0])
@@ -73,8 +74,30 @@ def activity_view(request, id):
 	activity = Activity.objects.get(id=id)
 	return render(request, 'activity.html',{'activity': activity})
 
+@login_required
+def orderlist_view(request):
+	orders = Order.objects.exclude(state='DV') # dont show delivered orders
+	states = ['RD', 'WT', 'RJ', 'CM']
+	orders = sorted(orders, key=lambda x: states.index(x.state)) # sort the orders by their states
+	return render(request, 'orderlist.html', {'orders':orders, 'orderStartFrom':-getConfig().firstOrderIDToday})
 
 
+# AJAX Views
+@login_required
+def handle_jobtime(request):
+	if request.method != 'POST':
+		return JsonResponse({}) # handle nothing
+	employee = Employee.objects.get(username=request['username'])
+	if employee.workBegan is None:
+		employee.workBegan = timezone.now()
+		employee.save()
+	else:
+		Activity.objects.create(type='گزارش کامند',
+								title='ساعت کاری '+employee.firstName + ' ' + employee.lastName + 'در تاریخ '+timezone.now().date(),
+								description='در تاریخ ' + timezone.now().date() + 'آقا/خانم '+employee.firstName + ' ' + employee.lastName + 'از ساعت '+employee.workBegan + ' تا ساعت '+timezone.now().time() + ' مشغول به کار بودند.',
+								moneyTrade=0)
+		employee.workBegan = None
+		employee.save()
 @login_required
 def order_change_view(request):
 	if request.method != 'POST':
@@ -106,13 +129,6 @@ def order_change_view(request):
 	return JsonResponse(response)
 
 @login_required
-def orderlist_view(request):
-	orders = Order.objects.exclude(state='DV') # dont show delivered orders
-	states = ['RD', 'WT', 'RJ', 'CM']
-	orders = sorted(orders, key=lambda x: states.index(x.state)) # sort the orders by their states
-	return render(request, 'orderlist.html', {'orders':orders, 'orderStartFrom':-getConfig().firstOrderIDToday})
-
-@login_required
 def order_view(request):
 	if request.method == 'POST':
 		items = request.POST['items'].split(',')
@@ -136,7 +152,7 @@ def order_view(request):
 			i += 1
 
 		cfg = getConfig()
-		if cfg.lastOrderDate == None or order.orderTime.date() > cfg.lastOrderDate.date(): #TODO: reset orders every day
+		if cfg.lastOrderDate == None or order.orderTime.date() > cfg.lastOrderDate.date(): #TODO: reset orders' id every day
 			cfg.firstOrderIDToday = order.id - 1
 		cfg.lastOrderDate = order.orderTime
 		cfg.save()

@@ -22,10 +22,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login_view, name='login'),
     path('home/', views.home_view),
-    path('order/', views.order_view, name='order'),
     path('logout/', views.logout_view, name='logout'),
-    path('order_change/', views.order_change_view, name='order_state_change'),
     path('orderlist/', views.orderlist_view, name='orderlist'),
     path('activities/', views.activities_view, name='activities'),
     path('activity/<int:id>', views.activity_view, name='activity'),
+
+    # ajax views
+    path('order/', views.order_view, name='order'),
+    path('handle_jobtime/', views.order_view, name='order'),
+    path('order_change/', views.order_change_view, name='order_state_change'),
 ]

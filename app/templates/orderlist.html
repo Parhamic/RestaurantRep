@@ -40,7 +40,7 @@ function order_change_state(order, state)
         type:"POST",
         data: {
           'order_id': orderID,
-          'state':state, // Confirmed
+          'state':state,
           csrfmiddlewaretoken: '{{ csrf_token }}'
         },
         dataType: 'json',
