@@ -64,6 +64,14 @@ def home_view(request):
 	return render(request, 'home.html')
 
 @login_required
+def activities_view(request):
+	return render(request, 'activities.html')
+
+@login_required
+def activity_view(request):
+	return render(request, 'activity.html')
+
+@login_required
 def order_change_view(request):
 	if request.method != 'POST':
 		return JsonResponse({}) # handle nothing

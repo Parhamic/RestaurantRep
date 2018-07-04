@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>سفارشات</h1>
 {% for order in orders %}
   <div class=" orderitem orderitem-{{ order.state }}">
     <p class="orderitem-name">سفارش {% if order.id|add:orderStartFrom <= 0 %} قبلی {% else %}{{ order.id|add:orderStartFrom }} {% endif %}</p>
@@ -22,9 +23,9 @@
         {% endfor %}
       </table>
     <div class="buttons">
-      <button class="btn-item acc-btn" name="accept" onclick="order_change_state(this, 'CM')">پذیرفتن</button>
-      <button class="btn-item rej-btn" name="accept" onclick="order_change_state(this, 'RJ')">رد کردن</button>
-      <button class="btn-item ready-btn" name="readybtn" onclick="order_change_state(this, 'RD')">آماده</button>
+      {% if order.state == 'WT' %} <button class="btn-item acc-btn" name="accept" onclick="order_change_state(this, 'CM')">پذیرفتن</button> {% endif %}
+      {% if order.state == 'WT' %}<button class="btn-item rej-btn" name="accept" onclick="order_change_state(this, 'RJ')">رد کردن</button>{% endif %}
+      {% if order.state == 'CM' %}<button class="btn-item ready-btn" name="readybtn" onclick="order_change_state(this, 'RD')">آماده</button>{% endif %}
       <button class="btn-item delete-btn" name="deletebtn" onclick="order_change_state(this, 'RM')">حذف سفارش</button>
     </div>
   </div>

@@ -6,6 +6,7 @@
         <title>خانه</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+        <link rel="stylesheet" href="{% static 'BYekan.ttf' %}">
         <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
         <script src="{% static 'js/jquery.min.js' %}" ></script>
     </head>
@@ -39,7 +40,7 @@
           {% endif %}
           {% if perms.app.can_see_activities %}
           <div class="menu_item">
-          <a href="{% url 'order' %}">
+          <a href="{% url 'activities' %}">
             گزارشات
           </a>
         </div>

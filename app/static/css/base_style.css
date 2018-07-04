@@ -1,11 +1,12 @@
 @font-face {
 font-family: "BYekan";
-src: url("B Yekan.ttf");
+src: url("BYekan.ttf");
 }
 body *{
   font-family: 'BYekan';
 }
 body {
+    font-family: 'BYekan';
     background-color: #fff;
     text-align: right;
     text-decoration: none;
@@ -377,6 +378,9 @@ table {
     text-align: right;
 }
 tr:nth-child(even){background-color: gray}
+th{background: #8c0000}
+td{font-weight: normal;font-size: 14px;}
+tr:hover{background: rgb(250, 100, 100, 0.5)}
 th, td {
     padding: 8px;
     border-bottom: 1px solid #ddd;
@@ -387,7 +391,7 @@ th, td {
 }
 .btn-item{
   padding: 10px 15px 11px !important;
-  font-size: 8px !important;
+  font-size: 10px !important;
   background-color: #F36C8C;
   font-weight: bold;
   text-shadow: 1px 1px #F36C8C;
@@ -425,4 +429,11 @@ border: 1px solid green;
   background-color: #bc0019;
   text-shadow: 1px 1px #bc0019;
   border: 1px solid #bc0019;
+}
+/* activities page*/
+.activities td:hover{
+  cursor: pointer;
+}
+.activities tr{
+  font-size: 15px;
 }

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="activities">
+    <table>
+      <tr>
+        <th>توضیحات</th>
+        <th>تراکنش مالی</th>
+        <th>تاریخ ثبت گزارش</th>
+        <th>عنوان گزارش</th>
+        <th>نوع گزارش</th>
+      </tr>
+      <tr>
+        <td>توضیحات</td>
+        <td>تراکنش مالی</td>
+        <td>تاریخ ثبت گزارش</td>
+        <td>عنوان گزارش</td>
+        <td>نوع گزارش</td>
+      </tr>
+      <tr onclick="location.href='{% url 'activity' %}' ">
+        <td>توضیحات</td>
+        <td>تراکنش مالی</td>
+        <td>تاریخ ثبت گزارش</td>
+        <td>عنوان گزارش</td>
+        <td>نوع گزارش</td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}
