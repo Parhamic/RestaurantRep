@@ -65,11 +65,21 @@ def home_view(request):
 
 @login_required
 def activities_view(request):
-	return render(request, 'activities.html')
+	activities = Activity.objects.all()
+	return render(request, 'activities.html',{'activities':activities})
 
 @login_required
 def activity_view(request):
-	return render(request, 'activity.html')
+	if request.method != 'POST':
+		return JsonResponse({}) # handle nothing
+
+	activity = Activity.objects.all()
+	# response = {}
+	# response['succeed'] = 'true'
+	# return JsonResponse(response)
+	return render(request, 'activity.html',{'activity': activity})
+
+
 
 @login_required
 def order_change_view(request):
