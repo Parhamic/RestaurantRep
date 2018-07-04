@@ -11,7 +11,7 @@
         <th>نوع گزارش</th>
       </tr>
       {% for activity in activities %}
-      <tr onclick="showActivity(this)">
+      <tr onclick="window.location='{% url "activity" activity.id %}'">
         <td>{{ activity.description }}</td>
         <td>{{ activity.moneyTrade }}</td>
         <td>{{ activity.commitTime }}</td>
@@ -21,25 +21,4 @@
       {% endfor %}
     </table>
   </div>
-
-<script>
-function showActivity(activitytr)
-{
-  activity = activitytr.children[3].innerHTML;
-  $.ajax({
-        url: '{% url "activity" %}',
-        type:"POST",
-        data: {
-          'activity': activity,
-          csrfmiddlewaretoken: '{{ csrf_token }}'
-        },
-        dataType: 'json',
-        // success: function (data) {
-        //   if (data.succeed && data.succeed == 'true') {
-        //     console.log("success");
-        //   }
-        // }
-      });
-}
-</script>
 {% endblock %}

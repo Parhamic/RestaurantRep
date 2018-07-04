@@ -27,5 +27,5 @@ urlpatterns = [
     path('order_change/', views.order_change_view, name='order_state_change'),
     path('orderlist/', views.orderlist_view, name='orderlist'),
     path('activities/', views.activities_view, name='activities'),
-    path('activity/', views.activity_view, name='activity'),
+    path('activity/<int:id>', views.activity_view, name='activity'),
 ]

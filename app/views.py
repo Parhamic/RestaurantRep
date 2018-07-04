@@ -69,14 +69,8 @@ def activities_view(request):
 	return render(request, 'activities.html',{'activities':activities})
 
 @login_required
-def activity_view(request):
-	if request.method != 'POST':
-		return JsonResponse({}) # handle nothing
-
-	activity = Activity.objects.all()
-	# response = {}
-	# response['succeed'] = 'true'
-	# return JsonResponse(response)
+def activity_view(request, id):
+	activity = Activity.objects.get(id=id)
 	return render(request, 'activity.html',{'activity': activity})
 
 
