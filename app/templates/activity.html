@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="activity1">
-    Hello
+
+  <div class="activity">
+    <div class="detail">
+      <!-- if type==sell -->
+
+    <p><span> نوع گزارش:  </span>  {{ activity.type }} </p>
+    <p><span>عنوان گزارش :</span>  {{ activity.title}} </p>
+    <p><span>زمان ثبت گزارش</span>   {{ activity.commitTime }} </p>
+    <p><span> تراکنش مالی گزارش:</span>  {{ activity.moneyTrade }} </p>
+    </div>
+    <div class="clear"></div>
+    <div class="description">
+      <h2>:توضیحات</h2><br>
+      <p>{{ activity.description }}</p>
+    </div>
   </div>
+
+  <div class="clear"></div>
 {% endblock %}

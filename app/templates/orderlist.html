@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>سفارشات</h1>
+<p class="page-title">سفارشات</p>
 {% for order in orders %}
   <div class=" orderitem orderitem-{{ order.state }}">
     <p class="orderitem-name">سفارش {% if order.id|add:orderStartFrom <= 0 %} قبلی {% else %}{{ order.id|add:orderStartFrom }} {% endif %}</p>
@@ -31,6 +31,7 @@
   </div>
 {% endfor %}
 
+<div class="clear"></div>
 <script>
 function order_change_state(order, state)
 {
