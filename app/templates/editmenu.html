@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="page-title">ویرایش منو</p>
+<div id="menuedit">
+  {% for item in items %}
+    <div class="item" style="item">
+      <div class="itemName">{{ item.name }}</div>
+      <form name="form2" action="">
+      <label class="itemPrice" for="price">قیمت: {{ item.price }}</label>
+      <div class="clear"></div>
+      <div class="changeprice">
+
+      </div>
+      <input class="priceinput" type="number" name="price" min="0" value="0" oninput="">
+      <p>تغییر قیمت</p>
+      <div class="clear"></div>
+        <div class="exist">
+        <input type="checkbox" value="Car">موجود
+        </div>
+      <div class="clear"></div>
+      </form>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="clear"></div>
+{% endblock %}

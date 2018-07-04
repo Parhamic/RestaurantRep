@@ -73,7 +73,10 @@ def activity_view(request, id):
 	activity = Activity.objects.get(id=id)
 	return render(request, 'activity.html',{'activity': activity})
 
-
+@login_required
+def editmenu_view(request):
+	items = Item.objects.all()
+	return render(request, 'editmenu.html', {'items':items})
 
 @login_required
 def order_change_view(request):

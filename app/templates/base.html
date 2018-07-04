@@ -63,6 +63,13 @@
           </a>
         </div>
           {% endif %}
+          {% if perms.app.can_add_payments %}
+          <div class="menu_item">
+          <a href="{% url 'editmenu' %}">
+            ویرایش منو
+          </a>
+        </div>
+          {% endif %}
           <div class="clear"></div>
         </div>
       </div>

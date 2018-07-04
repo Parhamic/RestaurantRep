@@ -138,7 +138,6 @@ a:hover{
   color:red;
 }
 .menu{
-  /*text-shadow: 0 10px 4px rgba(0,0,0,0.8);*/
   width: 100%;
   border-top: 1px solid white;
   margin : 60px auto 0 auto;
@@ -151,7 +150,6 @@ a:hover{
   border:1px solid #ffffff;
   width: 15%;
   font-size:15px;
-  padding:6px 15px;
   text-decoration:none;
   text-shadow:0px 1px 0px #7a0c22;
   /**/
@@ -489,4 +487,27 @@ border: 1px solid green;
 .detail span{
   font-weight: bold;
   font-size: 16px;
+}
+/* menuedit */
+#menuedit .itemPrice,.itemName,input{
+  font-size: 17px;
+}
+#menuedit .priceinput{
+  float: left;
+  width: 50%;
+}
+#menuedit .changeprice{
+  margin: 20px auto 20px auto;
+}
+#menuedit p{
+  float: right;
+  width: 40%;
+}
+#menuedit .exist{
+  margin: 20px auto 20px auto;
+  width: 40%;
+}
+#menuedit .itemName{
+    width: 65%;
+    text-align: center;
 }
