@@ -75,18 +75,16 @@ def activity_view(request, id):
 	return render(request, 'activity.html',{'activity': activity})
 
 @login_required
-<<<<<<< HEAD
 def orderlist_view(request):
 	orders = Order.objects.exclude(state='DV') # dont show delivered orders
 	states = ['RD', 'WT', 'RJ', 'CM']
 	orders = sorted(orders, key=lambda x: states.index(x.state)) # sort the orders by their states
 	return render(request, 'orderlist.html', {'orders':orders, 'orderStartFrom':-getConfig().firstOrderIDToday})
 
-=======
+@login_required
 def editmenu_view(request):
 	items = Item.objects.all()
 	return render(request, 'editmenu.html', {'items':items})
->>>>>>> 6c62ea107c82b75dbd29648e698fa6dcde9747ac
 
 # AJAX Views
 @login_required
