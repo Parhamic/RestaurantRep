@@ -16,8 +16,25 @@
         src: url("{% static 'BYekan.ttf'%}") format('truetype');
         }
         </style>
+        <script>
+          function startTime() {
+              var today = new Date();
+              var h = today.getHours();
+              var m = today.getMinutes();
+              var s = today.getSeconds();
+              m = checkTime(m);
+              s = checkTime(s);
+              document.getElementById('txt').innerHTML =
+              "ساعت" + " : "+ h + ":" + m + ":" + s;
+              var t = setTimeout(startTime, 500);
+          }
+          function checkTime(i) {
+              if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+              return i;
+          }
+        </script>
     </head>
-    <body>
+    <body onload="startTime()">
       <div class="header box">
         <h1>سامانه مدیریت مشتریان</h1>
         <div class="menu box">
@@ -70,8 +87,13 @@
           </a>
         </div>
           {% endif %}
-          <div class="clear"></div>
         </div>
+        <div>
+          <div id="txt"></div>
+          <button Class="startbtn" onclick="">شروع به کار</button>
+          <button Class="startbtn" onclick="">پایان کار</button>
+        </div>
+        <div class="clear"></div>
       </div>
         <div class="container">
 
