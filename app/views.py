@@ -6,11 +6,15 @@ from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationM
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils import timezone
+from jalali_date import datetime2jalali, date2jalali
 import datetime
 
 def getConfig():
 	cfg, created = ConfigurationModel.objects.get_or_create(id=1)
 	return cfg
+
+def getNow():
+	return timezone.localtime(timezone.now())
 
 def validStateChange(state1, state2):
 	if state1 == state2:
@@ -66,7 +70,7 @@ def home_view(request):
 
 @login_required
 def activities_view(request):
-	activities = Activity.objects.all()
+	activities = reversed(Activity.objects.all())
 	return render(request, 'activities.html',{'activities':activities})
 
 @login_required
@@ -91,17 +95,21 @@ def editmenu_view(request):
 def handle_jobtime(request):
 	if request.method != 'POST':
 		return JsonResponse({}) # handle nothing
-	employee = Employee.objects.get(username=request['username'])
+	employee = request.user
+	response = {}
 	if employee.workBegan is None:
-		employee.workBegan = timezone.now()
+		employee.workBegan = getNow()
 		employee.save()
+		response['work'] = 1
 	else:
-		Activity.objects.create(type='گزارش کامند',
-								title='ساعت کاری '+employee.firstName + ' ' + employee.lastName + 'در تاریخ '+timezone.now().date(),
-								description='در تاریخ ' + timezone.now().date() + 'آقا/خانم '+employee.firstName + ' ' + employee.lastName + 'از ساعت '+employee.workBegan + ' تا ساعت '+timezone.now().time() + ' مشغول به کار بودند.',
+		Activity.objects.create(type='گزارش کارمند',
+								title=' ساعت کاری آقا/خانم '+employee.first_name + ' ' + employee.last_name,
+								description='در تاریخ ' + date2jalali(getNow().date()).strftime('%y/%m/%d') + 'آقا/خانم '+employee.first_name + ' ' + employee.last_name + 'از ساعت '+employee.workBegan.strftime('%H:%M') + ' تا ساعت '+ getNow().strftime('%H:%M') + ' مشغول به کار بودند.',
 								moneyTrade=0)
 		employee.workBegan = None
 		employee.save()
+		response['work'] = 0
+	return JsonResponse(response)
 @login_required
 def order_change_view(request):
 	if request.method != 'POST':
@@ -121,7 +129,7 @@ def order_change_view(request):
 			totalPrice = 0
 			desc = 'فاکتور فروش شماره '+ str(order.id) + '\n\n'
 			for item in order.items.all():
-				desc += item.item.name + "   " + str(item.number)
+				desc += item.item.name + "   " + str(item.number) + '\n'
 				totalPrice += item.item.price*item.number
 
 			Activity.objects.create(type='فروش',

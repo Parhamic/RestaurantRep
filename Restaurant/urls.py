@@ -30,6 +30,6 @@ urlpatterns = [
 
     # ajax views
     path('order/', views.order_view, name='order'),
-    path('handle_jobtime/', views.order_view, name='order'),
+    path('handle_jobtime/', views.handle_jobtime, name='handlejobtime'),
     path('order_change/', views.order_change_view, name='order_state_change'),
 ]

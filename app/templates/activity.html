@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load jalali_tags %}
 
 {% block content %}
 
@@ -8,13 +9,13 @@
 
     <p><span> نوع گزارش:  </span>  {{ activity.type }} </p>
     <p><span>عنوان گزارش :</span>  {{ activity.title}} </p>
-    <p><span>زمان ثبت گزارش</span>   {{ activity.commitTime }} </p>
+    <p><span>زمان ثبت گزارش : </span>{{ activity.commitTime|to_jalali:'%y/%m/%d ساعت %H:%M' }}</p>
     <p><span> تراکنش مالی گزارش:</span>  {{ activity.moneyTrade }} </p>
     </div>
     <div class="clear"></div>
     <div class="description">
       <h2>:توضیحات</h2><br>
-      <p>{{ activity.description }}</p>
+      <p><pre style="direction:rtl">{{ activity.description }}</pre></p>
     </div>
   </div>
 

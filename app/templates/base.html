@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 
 <html lang="en" class="no-js">
@@ -17,24 +18,52 @@
         }
         </style>
         <script>
-          function startTime() {
-              var today = new Date();
-              var h = today.getHours();
-              var m = today.getMinutes();
-              var s = today.getSeconds();
-              m = checkTime(m);
-              s = checkTime(s);
-              document.getElementById('txt').innerHTML =
-              "ساعت" + " : "+ h + ":" + m + ":" + s;
-              var t = setTimeout(startTime, 500);
+          var now;
+          function startTime(hour, minute, second) {
+            console.log(hour, minute, second)
+            now = new Date();
+            now.setHours(hour);
+            now.setMinutes(minute);
+            now.setSeconds(second);
+            updateTime();
           }
-          function checkTime(i) {
-              if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+          function updateTime()
+          {
+            now = new Date(now.getTime() + 1000);
+            var h = now.getHours();
+            var m = now.getMinutes();
+            var s = now.getSeconds();
+            m = formatTime(m);
+            s = formatTime(s);
+            document.getElementById('txt').innerHTML =
+            "ساعت" + " : "+ h + ":" + m + ":" + s;
+            setTimeout(updateTime, 1000);
+          }
+          function formatTime(i) { // add zero in front of one digit numbers
+              if (i < 10) {i = "0" + i};
               return i;
+          }
+
+          function handlejobtime()
+          {
+            $.ajax({
+                  url: '{% url "handlejobtime" %}',
+                  type:"POST",
+                  data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                  },
+                  dataType: 'json',
+                  success: function (data) {
+                    if (data.work != null) {
+                      var x = document.querySelector(".startbtn");
+                      x.innerHTML = (data.work == 0) ? 'شروع کار' : 'پایان کار';
+                    }
+                  }
+                });
           }
         </script>
     </head>
-    <body onload="startTime()">
+    <body onload="startTime({{ now.time.hour }}, {{ now.time.minute }}, {{ now.time.second }})">
       <div class="header box">
         <h1>سامانه مدیریت مشتریان</h1>
         <div class="menu box">
@@ -90,8 +119,14 @@
         </div>
         <div>
           <div id="txt"></div>
-          <button Class="startbtn" onclick="">شروع به کار</button>
-          <button Class="startbtn" onclick="">پایان کار</button>
+          <button Class="startbtn" onclick="handlejobtime()">
+            {% if not request.user.workBegan %}
+              شروع به کار
+            {% else %}
+              پایان کار
+            {% endif %}
+          </button>
+
         </div>
         <div class="clear"></div>
       </div>

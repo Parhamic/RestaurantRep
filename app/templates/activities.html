@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load jalali_tags %}
+{% load string_funcs %}
 
 {% block content %}
 <p class="page-title">گزارشات</p>
@@ -14,9 +16,9 @@
       </tr>
       {% for activity in activities %}
       <tr onclick="window.location='{% url "activity" activity.id %}'">
-        <td>{{ activity.description }}</td>
-        <td>{{ activity.moneyTrade }}</td>
-        <td>{{ activity.commitTime }}</td>
+        <td>{{ activity.description|cutFirstLine:25 }}</td>
+        <td style="direction:rtl">{{ activity.moneyTrade }}تومان</td>
+        <td style="direction:rtl">{{ activity.commitTime|to_jalali:'%y/%m/%d' }} ساعت {{ activity.commitTime|to_jalali:'%H:%M' }}</td>
         <td id="activity-title">{{ activity.title }}</td>
         <td>{{ activity.type }}</td>
       </tr>

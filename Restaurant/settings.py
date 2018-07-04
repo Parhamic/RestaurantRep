@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jalali_date',
 
 ]
 
@@ -67,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app.context_processors.addtime'
             ],
         },
     },
@@ -80,17 +82,17 @@ WSGI_APPLICATION = 'Restaurant.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME':'restaurant',
-        # 'USER':'root',
-        # 'PASSWORD':'admin',
-        # 'HOST':'localhost',
-        # 'PORT':3306,
-        # 'OPTIONS': {
-        #  "init_command": "SET foreign_key_checks = 0;",
-        # },
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME':'restaurant',
+        'USER':'root',
+        'PASSWORD':'admin',
+        'HOST':'localhost',
+        'PORT':3306,
+        'OPTIONS': {
+         "init_command": "SET foreign_key_checks = 0;",
+        },
     }
 }
 
@@ -117,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
 
 TIME_ZONE = 'Iran'
 
