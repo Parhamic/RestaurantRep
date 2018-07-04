@@ -6,14 +6,18 @@
         <title>خانه</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'css/reset.css' %}">
-        <link rel="stylesheet" href="{% static 'BYekan.ttf' %}">
+        <!-- <link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'> -->
+        <!-- <link href="{% static 'BYekan.ttf' %}"> -->
         <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
         <script src="{% static 'js/jquery.min.js' %}" ></script>
+        <style media="screen">
+        @font-face {
+        font-family: 'BYekan';
+        src: url("{% static 'BYekan.ttf'%}") format('truetype');
+        }
+        </style>
     </head>
-    <body style="font-family: BYekan;">
-      <div class="info">
-        info
-      </div>
+    <body>
       <div class="header box">
         <h1>سامانه مدیریت مشتریان</h1>
         <div class="menu box">
@@ -56,6 +60,13 @@
           <div class="menu_item">
           <a href="{% url 'order' %}">
             هزینه ها
+          </a>
+        </div>
+          {% endif %}
+          {% if perms.app.can_add_payments %}
+          <div class="menu_item">
+          <a href="{% url 'editmenu' %}">
+            ویرایش منو
           </a>
         </div>
           {% endif %}
