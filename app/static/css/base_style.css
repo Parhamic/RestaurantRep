@@ -571,21 +571,51 @@ border: 1px solid green;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #7a0c22;
 }
+.addbtnbox{
+  width: 14%;
+  margin: 5% auto 6% auto;
+}
+.addbtn{
+	-moz-box-shadow:inset 0px 39px 0px -24px #eb1717;
+	-webkit-box-shadow:inset 0px 39px 0px -24px #eb1717;
+	box-shadow:inset 0px 39px 0px -24px #eb1717;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f02727), color-stop(1, #913c3c));
+	background:-moz-linear-gradient(top, #f02727 5%, #913c3c 100%);
+	background:-webkit-linear-gradient(top, #f02727 5%, #913c3c 100%);
+	background:-o-linear-gradient(top, #f02727 5%, #913c3c 100%);
+	background:-ms-linear-gradient(top, #f02727 5%, #913c3c 100%);
+	background:linear-gradient(to bottom, #f02727 5%, #913c3c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f02727', endColorstr='#913c3c',GradientType=0);
+	background-color:#f02727;
+  width: 95%;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	border-radius:4px;
+	border:1px solid #ffffff;
+	cursor:pointer;
+  padding: 10px;
+	color:#ffffff;
+	font-size:13px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #7a0c22;
+}
 .overlay-container{
   width:50%;
   border: 1px dashed white;
-  margin: 20% auto;
+  margin: 17% auto;
   padding: 50px;
   border-radius: 20px;
   background-color: rgba(200,200,200,0.7);
 }
-.overlay-container p{
-  margin: 20px auto 20px auto;
-  font-size: 20px;
+.overlaytext{
+  width: 40%;
+  margin: 20px 0 20px auto;
+  font-size: 18px;
 }
 .overlay-container input{
-  margin: 0 auto 20px auto;
-  font-size: 18px;
+  margin: 0 5px 20px auto;
+  direction: rtl;
+  font-size: 16px;
 }
 #overlay {
   position: fixed;

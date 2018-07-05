@@ -3,10 +3,14 @@
 <div id="overlay">
   <div class="overlay-container">
     <div class="itemName"><h1>ویرایش نام محصول </h1></div>
-    <p>: نام جدبد</p>
+    <div class="overlaytext">
+      <p>: نام جدید</p>
+    </div>
     <input class="nameinput" name="name" >
     <div class="clear"></div>
-    <p>: قیمت جدید</p>
+    <div class="overlaytext">
+       <p>: قیمت جدید</p>
+    </div>
     <input class="priceinput" type="number" name="price" min="0" value="0" oninput="">
     <div class="clear"></div>
     <div class="exist">
@@ -14,7 +18,7 @@
     </div>
     <button class="editbtn" onclick="hideDialogBox('submit', this)" >ثبت تغییرات</button>
     <button class="editbtn" onclick="hideDialogBox('remove', this)" >حذف</button>
-    <button class="editbtn" onclick="hideDialogBox('cancel', this)" >انضراف</button>
+    <button class="editbtn" onclick="hideDialogBox('cancel', this)" >انصراف</button>
   </div>
 </div>
 
@@ -33,6 +37,10 @@
       <div class="clear"></div>
     </div>
   {% endfor %}
+  <div class="clear"></div>
+  <div class="addbtnbox">
+    <button class="addbtn" onclick="showDialogBox()">افزودن آیتم</button>
+  </div>
   <div class="clear"></div>
 
 </div>
