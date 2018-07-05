@@ -1,27 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
+<div id="overlay">
+  <div class="overlay-container">
+    <div class="itemName"><h1>ویرایش نام محصول </h1></div>
+    <p>: نام جدبد</p>
+    <input class="nameinput" name="name" >
+    <div class="clear"></div>
+    <p>: قیمت جدید</p>
+    <input class="priceinput" type="number" name="price" min="0" value="0" oninput="">
+    <div class="clear"></div>
+    <div class="exist">
+    <input type="checkbox" value="Car">موجود
+    </div>
+    <button class="editbtn" onclick="off()" >ثبت تغییرات</button>
+    <button class="editbtn" onclick="off()" >انضراف</button>
+  </div>
+</div>
+
+
 <p class="page-title">ویرایش منو</p>
 <div id="menuedit">
   {% for item in items %}
     <div class="item" style="item">
       <div class="itemName">{{ item.name }}</div>
-      <form name="form2" action="">
       <label class="itemPrice" for="price">قیمت: {{ item.price }}</label>
       <div class="clear"></div>
       <div class="changeprice">
-
       </div>
-      <input class="priceinput" type="number" name="price" min="0" value="0" oninput="">
-      <p>تغییر قیمت</p>
+      <button class="editbtn" onclick="on1()" >ویرایش</button>
       <div class="clear"></div>
-        <div class="exist">
-        <input type="checkbox" value="Car">موجود
-        </div>
-      <div class="clear"></div>
-      </form>
     </div>
   {% endfor %}
-</div>
+  <div class="clear"></div>
 
-<div class="clear"></div>
+</div>
+<script>
+function on1() {
+    document.getElementById("overlay").style.display = "block";
+}
+
+function off() {
+    document.getElementById("overlay").style.display = "none";
+}
+</script>
 {% endblock %}
