@@ -81,10 +81,17 @@
           </a>
         </div>
           {% endif %}
-          {% if perms.app.can_change_salary %}
+          <!-- {% if perms.app.can_change_salary %}
           <div class="menu_item">
           <a href="{% url 'order' %}">
             کارکنان
+          </a>
+        </div>
+          {% endif %} -->
+          {% if perms.app.can_add_payments %}
+          <div class="menu_item">
+          <a href="{% url 'editmenu' %}">
+            ویرایش منو
           </a>
         </div>
           {% endif %}
@@ -95,27 +102,21 @@
           </a>
         </div>
           {% endif %}
-          {% if perms.app.can_change_materials %}
+          <!-- {% if perms.app.can_change_materials %}
           <div class="menu_item">
           <a href="{% url 'order' %}">
             مواد
           </a>
         </div>
-          {% endif %}
-          {% if perms.app.can_add_payments %}
+          {% endif %} -->
+          <!-- {% if perms.app.can_add_payments %}
           <div class="menu_item">
           <a href="{% url 'order' %}">
             هزینه ها
           </a>
         </div>
-          {% endif %}
-          {% if perms.app.can_add_payments %}
-          <div class="menu_item">
-          <a href="{% url 'editmenu' %}">
-            ویرایش منو
-          </a>
-        </div>
-          {% endif %}
+          {% endif %} -->
+
         </div>
         <div>
           <div id="txt"></div>

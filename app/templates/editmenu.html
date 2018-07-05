@@ -10,10 +10,11 @@
     <input class="priceinput" type="number" name="price" min="0" value="0" oninput="">
     <div class="clear"></div>
     <div class="exist">
-    <input type="checkbox" value="Car">موجود
+    <input type="checkbox" id="inMenu">موجود
     </div>
-    <button class="editbtn" onclick="off()" >ثبت تغییرات</button>
-    <button class="editbtn" onclick="off()" >انضراف</button>
+    <button class="editbtn" onclick="hideDialogBox('submit', this)" >ثبت تغییرات</button>
+    <button class="editbtn" onclick="hideDialogBox('remove', this)" >حذف</button>
+    <button class="editbtn" onclick="hideDialogBox('cancel', this)" >انضراف</button>
   </div>
 </div>
 
@@ -23,11 +24,12 @@
   {% for item in items %}
     <div class="item" style="item">
       <div class="itemName">{{ item.name }}</div>
-      <label class="itemPrice" for="price">قیمت: {{ item.price }}</label>
+      <label class="itemPrice" for="price">قیمت: <span id='pricespan'>{{ item.price }}</span></label>
+      <p id="inMenu" style="display:none">{{ item.inMenu }}</p>
       <div class="clear"></div>
       <div class="changeprice">
       </div>
-      <button class="editbtn" onclick="on1()" >ویرایش</button>
+      <button class="editbtn" onclick="showDialogBox(this)" >ویرایش</button>
       <div class="clear"></div>
     </div>
   {% endfor %}
@@ -35,12 +37,64 @@
 
 </div>
 <script>
-function on1() {
-    document.getElementById("overlay").style.display = "block";
+var itemToChange;
+function showDialogBox(item) {
+    var overlay = document.getElementById("overlay");
+    overlay.style.display = "block";
+    itemToChange = item.parentElement.querySelector(".itemName").innerHTML;
+    overlay.querySelector(".nameinput").value = item.parentElement.querySelector(".itemName").innerHTML;
+    overlay.querySelector(".priceinput").value = parseInt(item.parentElement.querySelector(".itemPrice #pricespan").innerHTML);
+    overlay.querySelector(".exist #inMenu").checked = item.parentElement.querySelector("#inMenu").innerHTML == "True";
 }
 
-function off() {
-    document.getElementById("overlay").style.display = "none";
+function hideDialogBox(type, overlay) {
+
+    if (type == 'submit')
+    {
+      $.ajax({
+        type:'POST',
+        url: '{% url "editmenu" %}',
+        data:
+        {
+          'itemName':itemToChange,
+          'remove':'false',
+          'newName':overlay.parentElement.querySelector('.nameinput').value,
+          'itemPrice':overlay.parentElement.querySelector('.priceinput').value,
+          'inMenu':overlay.parentElement.querySelector('.exist #inMenu').checked,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType:'json',
+        success: function (data) {
+          if (data.succeed && data.succeed == 'true') {
+            document.getElementById("overlay").style.display = "none";
+            location.reload(); // TODO
+          }
+        }
+      });
+    }
+    else if (type == 'remove')
+    {
+      $.ajax({
+        type:'POST',
+        url: '{% url "editmenu" %}',
+        data:
+        {
+          'itemName':itemToChange,
+          'remove':'true',
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType:'json',
+        success: function (data) {
+          if (data.succeed && data.succeed == 'true') {
+            document.getElementById("overlay").style.display = "none";
+            location.reload(); // TODO
+          }
+        }
+      });
+    }
+
+    else
+      document.getElementById("overlay").style.display = "none";
 }
 </script>
 {% endblock %}

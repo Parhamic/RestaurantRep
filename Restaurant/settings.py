@@ -27,7 +27,7 @@ SECRET_KEY = '9z&nl_ke(ww5o0+6jbg0l6e&jc%!=j!f3j(r9sryrty-jl%*-m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'app.Employee'
 

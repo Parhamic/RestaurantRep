@@ -87,6 +87,19 @@ def orderlist_view(request):
 
 @login_required
 def editmenu_view(request):
+	if request.method == 'POST':
+		response = {}
+		item = Item.objects.get(name=request.POST['itemName'])
+		if request.POST['remove'] == 'true':
+			item.delete()
+		else:
+			item.name = request.POST['newName']
+			item.price = request.POST['itemPrice']
+			item.inMenu = (request.POST['inMenu'] == 'true')
+			item.save()
+		response['succeed'] = 'true'
+		return JsonResponse(response)
+
 	items = Item.objects.all()
 	return render(request, 'editmenu.html', {'items':items})
 
