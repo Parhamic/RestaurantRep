@@ -6,6 +6,7 @@ from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationM
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils import timezone
+from django.core import serializers
 from jalali_date import datetime2jalali, date2jalali
 import datetime
 
@@ -169,15 +170,9 @@ def order_view(request):
 		order = Order.objects.create()
 
 		# set the orderer
-        # old:
-		# if request.POST['customer'] != '':
-		# 	customer, created = Customer.objects.get_or_create(name=request.POST['customer'])
-		# 	order.orderer = customer
-		# 	order.save()
 		if request.POST['customer'] != '':
-			customer = Customer.objects.create(name=request.POST['customer'])
+			customer, created = Customer.objects.get_or_create(name=request.POST['customer'])
 			order.orderer = customer
-			Customer.save()
 			order.save()
 
 		i = 0
@@ -197,6 +192,8 @@ def order_view(request):
 		response = {'succeed':'true'}
 		return JsonResponse(response)
 
-
+	customers = Customer.objects.all()
+	customers = serializers.serialize("json", customers)
+	print (customers)
 	items = Item.objects.filter(inMenu=True)
 	return render(request, 'order.html', {'items':items})
