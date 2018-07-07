@@ -154,6 +154,12 @@ def order_change_view(request):
 	return JsonResponse(response)
 
 @login_required
+def customers_view(request):
+	customers = Customer.objects.all()
+	return render(request, 'customers.html',{'customers':customers})
+
+
+@login_required
 def order_view(request):
 	if request.method == 'POST':
 		items = request.POST['items'].split(',')
@@ -163,9 +169,15 @@ def order_view(request):
 		order = Order.objects.create()
 
 		# set the orderer
+        # old:
+		# if request.POST['customer'] != '':
+		# 	customer, created = Customer.objects.get_or_create(name=request.POST['customer'])
+		# 	order.orderer = customer
+		# 	order.save()
 		if request.POST['customer'] != '':
-			customer, created = Customer.objects.get_or_create(name=request.POST['customer'])
+			customer = Customer.objects.create(name=request.POST['customer'])
 			order.orderer = customer
+			Customer.save()
 			order.save()
 
 		i = 0

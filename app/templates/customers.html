@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <p class="page-title">مشتریان</p>
+
+  <div class="customers">
+    <table>
+      <tr>
+        <th>مشتری ویژه</th>
+        <th>مشتری</th>
+      </tr>
+      {% for customer in customers %}
+      <tr>
+        <td style="direction:rtl"><input type='checkbox' {% if customer.isVIP %} cheked {% endif %}></td>
+        <td>{{ customer.name }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

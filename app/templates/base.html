@@ -95,10 +95,17 @@
           {% endif %}
           {% if perms.app.can_see_activities %}
           <div class="menu_item">
+          <a href="{% url 'customers' %}">
+            مشتریان
+          </a>
+          </div>
+          {% endif %}
+          {% if perms.app.can_see_activities %}
+          <div class="menu_item">
           <a href="{% url 'activities' %}">
             گزارشات
           </a>
-        </div>
+          </div>
           {% endif %}
           <!-- {% if perms.app.can_change_materials %}
           <div class="menu_item">
