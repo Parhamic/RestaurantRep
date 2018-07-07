@@ -89,7 +89,7 @@ def orderlist_view(request):
 def editmenu_view(request):
 	if request.method == 'POST':
 		response = {}
-		item = Item.objects.get(name=request.POST['itemName'])
+		item, created = Item.objects.get_or_create(name=request.POST['itemName'])
 		if request.POST['remove'] == 'true':
 			item.delete()
 		else:

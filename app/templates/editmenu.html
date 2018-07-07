@@ -16,9 +16,9 @@
     <div class="exist">
     <input type="checkbox" id="inMenu">موجود
     </div>
-    <button class="editbtn" onclick="hideDialogBox('submit', this)" >ثبت تغییرات</button>
-    <button class="editbtn" onclick="hideDialogBox('remove', this)" >حذف</button>
-    <button class="editbtn" onclick="hideDialogBox('cancel', this)" >انصراف</button>
+    <button id="edit" class="editbtn" onclick="hideDialogBox('change', this)" >ثبت تغییرات</button>
+    <button id="remove" class="editbtn" onclick="hideDialogBox('remove', this)" >حذف</button>
+    <button id="cancel" class="editbtn" onclick="hideDialogBox('cancel', this)" >انصراف</button>
   </div>
 </div>
 
@@ -39,7 +39,7 @@
   {% endfor %}
   <div class="clear"></div>
   <div class="addbtnbox">
-    <button class="addbtn" onclick="showDialogBox()">افزودن آیتم</button>
+    <button class="addbtn" onclick="showDialogBox('additem')">افزودن آیتم</button>
   </div>
   <div class="clear"></div>
 
@@ -49,15 +49,29 @@ var itemToChange;
 function showDialogBox(item) {
     var overlay = document.getElementById("overlay");
     overlay.style.display = "block";
-    itemToChange = item.parentElement.querySelector(".itemName").innerHTML;
-    overlay.querySelector(".nameinput").value = item.parentElement.querySelector(".itemName").innerHTML;
-    overlay.querySelector(".priceinput").value = parseInt(item.parentElement.querySelector(".itemPrice #pricespan").innerHTML);
-    overlay.querySelector(".exist #inMenu").checked = item.parentElement.querySelector("#inMenu").innerHTML == "True";
+    if (item != 'additem')
+    {
+      itemToChange = item.parentElement.querySelector(".itemName").innerHTML;
+      overlay.querySelector('#remove').className = "editbtn"; // add the REMOVE button
+      // auto fill inputs
+      overlay.querySelector(".nameinput").value = item.parentElement.querySelector(".itemName").innerHTML;
+      overlay.querySelector(".priceinput").value = parseInt(item.parentElement.querySelector(".itemPrice #pricespan").innerHTML);
+      overlay.querySelector(".exist #inMenu").checked = item.parentElement.querySelector("#inMenu").innerHTML == "True";
+    }
+    else
+    {
+      itemToChange = '';
+      overlay.querySelector('#remove').className = "hidden"; // remove the REMOVE button
+      // reset the inputs
+      overlay.querySelector(".nameinput").value = '';
+      overlay.querySelector(".priceinput").value = '';
+      overlay.querySelector(".exist #inMenu").checked = true;
+    }
 }
 
 function hideDialogBox(type, overlay) {
 
-    if (type == 'submit')
+    if (type == 'change')
     {
       $.ajax({
         type:'POST',

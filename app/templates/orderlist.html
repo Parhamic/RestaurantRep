@@ -47,7 +47,8 @@ function order_change_state(order, state)
         dataType: 'json',
         success: function (data) {
           if (data.succeed && data.succeed == 'true') {
-            $(order).parent().parent().attr('class', 'orderitem orderitem-'+state);
+            location.reload(); // TODO
+            // $(order).parent().parent().attr('class', 'orderitem orderitem-'+state);
           }
         }
       });

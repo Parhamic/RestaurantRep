@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
 class Employee(AbstractUser):
 	class Meta:
 		permissions = (
@@ -36,7 +35,7 @@ class Customer(models.Model):
 	isVIP = models.BooleanField(default=False)
 
 class Item(models.Model): # Food menu items
-	name = models.CharField(max_length=64, primary_key=True)
+	name = models.CharField(max_length=64, unique=True)
 	price = models.IntegerField(default=0)
 	inMenu = models.BooleanField(default=True)
 
