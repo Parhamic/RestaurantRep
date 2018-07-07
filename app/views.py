@@ -156,6 +156,12 @@ def order_change_view(request):
 
 @login_required
 def customers_view(request):
+	if request.method == 'POST':
+		customer = Customer.objects.get(name=request.POST['customer'])
+		print ("changed to " + request.POST['isVIP'])
+		customer.isVIP = (request.POST['isVIP'] == 'true')
+		customer.save()
+		return JsonResponse({})
 	customers = Customer.objects.all()
 	return render(request, 'customers.html',{'customers':customers})
 
@@ -194,6 +200,5 @@ def order_view(request):
 
 	customers = Customer.objects.all()
 	customers = serializers.serialize("json", customers)
-	print (customers)
 	items = Item.objects.filter(inMenu=True)
-	return render(request, 'order.html', {'items':items})
+	return render(request, 'order.html', {'items':items, 'customers':customers})

@@ -10,7 +10,7 @@
       </tr>
       {% for customer in customers %}
       <tr>
-        <td style="direction:rtl"><input type='checkbox' {% if customer.isVIP %} cheked {% endif %} {% if customer.isVIP %} onchange="makeVIP(this,'VIP')" {% elif %} onchange="makeVIP(this,'notVIP')" {% endif %}></td>
+        <td style="direction:rtl"><input type='checkbox' {% if customer.isVIP %} checked {% endif %} onchange="submitVIP(this)"></td>
         <td id='customer-name'>{{ customer.name }}</td>
       </tr>
       {% endfor %}
@@ -18,14 +18,15 @@
   </div>
 
   <script>
-  function makeVIP(cust,state){
-    customer = cust.parentElement.parentElement.querySelector('#customer-name').innerHTML;
+  function submitVIP(checkbox){
+    customer = checkbox.parentElement.parentElement.querySelector('#customer-name').innerHTML;
+    isVIP = checkbox.checked;
     $.ajax({
       type:'POST',
       url: '{% url "customers" %}',
       data:
       {
-        'state':state,
+        'isVIP':isVIP,
         'customer':customer,
         csrfmiddlewaretoken: '{{ csrf_token }}'
       },
