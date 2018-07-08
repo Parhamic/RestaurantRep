@@ -165,6 +165,14 @@ def customers_view(request):
 	customers = Customer.objects.all()
 	return render(request, 'customers.html',{'customers':customers})
 
+@login_required
+def supply_view(request):
+	return render(request, 'supply.html')
+
+@login_required
+def stuff_view(request):
+	return render(request, 'stuff.html')
+
 
 @login_required
 def order_view(request):

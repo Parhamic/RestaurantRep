@@ -102,6 +102,20 @@
           {% endif %}
           {% if perms.app.can_see_activities %}
           <div class="menu_item">
+          <a href="{% url 'stuff' %}">
+            کارکنان
+          </a>
+          </div>
+          {% endif %}
+          {% if perms.app.can_see_activities %}
+          <div class="menu_item">
+          <a href="{% url 'supply' %}">
+            مواد اولیه
+          </a>
+          </div>
+          {% endif %}
+          {% if perms.app.can_see_activities %}
+          <div class="menu_item">
           <a href="{% url 'activities' %}">
             گزارشات
           </a>

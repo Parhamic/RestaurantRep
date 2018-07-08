@@ -678,9 +678,11 @@ border: 1px solid green;
 }
 /* customers */
 .customers th{background: #8c0000; font-weight: bold;font-size: 16px;}
-.customers td:hover{
-  cursor: pointer;
-}
 .customers tr{
+  font-size: 15px;
+}
+/* stuff page */
+.stuff th{background: #8c0000; font-weight: bold;font-size: 16px;}
+.stuff tr{
   font-size: 15px;
 }

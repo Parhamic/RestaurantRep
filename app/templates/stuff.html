@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="page-title">کارکنان</p>
+
+<div class="stuff">
+  <table>
+    <tr>
+      <th>ساعت کاری</th>
+      <th>حقوق</th>
+      <th>شغل</th>
+      <th>کارمند</th>
+    </tr>
+    <tr>
+      <td>ساعت<input type='number' value="7"></td>
+      <td><input type='number' onchange="changeSalary(this)" value="۲۵۰۰۰۰۰"></td>
+      <td id='stuff-job'>آشپز</td>
+      <td id='stuff-name'>علی حسنی</td>
+    </tr>
+  </table>
+</div>
+<script>
+function changeSalary(input){
+    stuff =input.parentElement.parentElement.querySelector('#stuff-name').innerHTML;
+    newSalary =input.value;
+  $.ajax({
+    type:'POST',
+    url: '{% url "stuff" %}',
+    data:
+    {
+      'newSalary':newSalary,
+      'stuff':stuff,
+      csrfmiddlewaretoken: '{{ csrf_token }}'
+    },
+    dataType:'json',
+  });
+}
+</script>
+{% endblock %}
