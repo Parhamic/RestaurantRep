@@ -27,10 +27,17 @@
       url: '{% url "customers" %}',
       data:
       {
+        'action':'remove',
         'customer':customer,
         csrfmiddlewaretoken: '{{ csrf_token }}'
       },
       dataType:'json',
+      success: function(data){
+        if (data.succeed && data.succeed == 'true')
+        {
+          $(btn).parent().parent().remove();
+        }
+      }
     });
   }
   function submitVIP(checkbox){
@@ -41,6 +48,7 @@
       url: '{% url "customers" %}',
       data:
       {
+        'action':'change',
         'isVIP':isVIP,
         'customer':customer,
         csrfmiddlewaretoken: '{{ csrf_token }}'

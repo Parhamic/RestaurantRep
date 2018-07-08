@@ -157,11 +157,15 @@ def order_change_view(request):
 @login_required
 def customers_view(request):
 	if request.method == 'POST':
+		response = {}
 		customer = Customer.objects.get(name=request.POST['customer'])
-		print ("changed to " + request.POST['isVIP'])
-		customer.isVIP = (request.POST['isVIP'] == 'true')
-		customer.save()
-		return JsonResponse({})
+		if request.POST['action'] == 'change':
+			customer.isVIP = (request.POST['isVIP'] == 'true')
+			customer.save()
+		elif request.POST['action'] == 'remove':
+			customer.delete()
+			response['succeed'] = 'true'
+		return JsonResponse(response)
 	customers = Customer.objects.all()
 	return render(request, 'customers.html',{'customers':customers})
 
