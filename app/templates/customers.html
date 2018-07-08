@@ -5,11 +5,13 @@
   <div class="customers">
     <table>
       <tr>
+        <th>حذف مشتری</th>
         <th>مشتری ویژه</th>
         <th>مشتری</th>
       </tr>
       {% for customer in customers %}
       <tr>
+        <td><button class="editbtn" onclick="delcustomer(this)" >حذف</button></td>
         <td style="direction:rtl"><input type='checkbox' {% if customer.isVIP %} checked {% endif %} onchange="submitVIP(this)"></td>
         <td id='customer-name'>{{ customer.name }}</td>
       </tr>
@@ -18,6 +20,19 @@
   </div>
 
   <script>
+  function delcustomer(btn){
+    customer = btn.parentElement.parentElement.querySelector('#customer-name').innerHTML;
+    $.ajax({
+      type:'POST',
+      url: '{% url "customers" %}',
+      data:
+      {
+        'customer':customer,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      dataType:'json',
+    });
+  }
   function submitVIP(checkbox){
     customer = checkbox.parentElement.parentElement.querySelector('#customer-name').innerHTML;
     isVIP = checkbox.checked;
