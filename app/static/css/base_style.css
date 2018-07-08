@@ -723,3 +723,11 @@ border: 1px solid green;
 .stuff tr{
   font-size: 15px;
 }
+.overlay-container-stuff{
+  width:50%;
+  border: 1px dashed white;
+  margin: 5% auto;
+  padding: 50px;
+  border-radius: 20px;
+  background-color: rgba(200,200,200,0.7);
+}

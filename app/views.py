@@ -175,7 +175,8 @@ def supply_view(request):
 
 @login_required
 def stuff_view(request):
-	return render(request, 'stuff.html')
+	Employees = Employee.objects.all()
+	return render(request, 'stuff.html',{'Employees':Employees})
 
 
 @login_required

@@ -2,23 +2,129 @@
 {% block content %}
 <p class="page-title">کارکنان</p>
 
+<div id="overlay">
+  <div class="overlay-container-stuff">
+    <div class="EmployeeName"><h1>ویرایش نام محصول </h1></div>
+    <div class="overlaytext">
+      <p>: نام کارمند</p>
+    </div>
+    <input class="nameinput" name="name" >
+    <div class="clear"></div>
+    <div class="overlaytext">
+       <p>: عنوان شغل</p>
+    </div>
+    <input class="priceinput" type="number" name="price" min="0" value="0" oninput="">
+    <div class="clear"></div>
+    <div class="overlaytext">
+       <p>: حقوق</p>
+    </div>
+    <input class="EmployeeSalary" type="number" min="0" value="0">
+    <div class="clear"></div>
+    <div class="overlaytext">
+       <p>: ساعت شروع کار</p>
+    </div>
+    <input class="EmployeeWorkBegan" type="time">
+    <div class="clear"></div>
+    <div class="overlaytext">
+       <p>: ساعت اتمام کار</p>
+    </div>
+    <input class="EmployeeWorkEnd" type="time">
+    <div class="clear"></div>
+
+    <button id="edit" class="editbtn" onclick="hideDialogBox('change', this)" >افزودن</button>
+    <button id="cancel" class="editbtn" onclick="hideDialogBox('cancel', this)" >انصراف</button>
+  </div>
+</div>
+
 <div class="stuff">
   <table>
     <tr>
-      <th>ساعت کاری</th>
+      <th>حذف کارمند</th>
+      <th>ساعت شروع کار</th>
+      <th>ساعت اتمام کار</th>
       <th>حقوق</th>
       <th>شغل</th>
       <th>کارمند</th>
     </tr>
+    {% for Employee in Employees%}
     <tr>
-      <td>ساعت<input type='number' value="7"></td>
-      <td><input type='number' onchange="changeSalary(this)" value="۲۵۰۰۰۰۰"></td>
-      <td id='stuff-job'>آشپز</td>
-      <td id='stuff-name'>علی حسنی</td>
+      <td><button class="editbtn" onclick="delEmployee(this)" >حذف</button></td>
+      <td>ساعت<input type='time' value="{{ Employee.workStart }}"></td>
+      <td>ساعت<input type='time' value="{{ Employee.workEnd }}"></td>
+      <td><input type='number' onchange="changeSalary(this)" value="{{ Employee.salary}}"></td>
+      <td id='stuff-job'>{{ Employee.jobTitle }}</td>
+      <td id='stuff-name'></td>
     </tr>
+    {% endfor %}
   </table>
 </div>
+<div class="clear"></div>
+<div class="addbtnbox">
+  <button class="addbtn" onclick="showDialogBox('addEmployee')">افزودن کارمند</button>
+</div>
+<div class="clear"></div>
 <script>
+function showDialogBox(item) {
+    var overlay = document.getElementById("overlay");
+    overlay.style.display = "block";
+    // reset the inputs
+    overlay.querySelector(".EmployeeName").value = '';
+    overlay.querySelector(".EmployeeJobTitle").value = '';
+    overlay.querySelector(".EmployeeSalary").value = '';
+    overlay.querySelector(".EmployeeWorkBegan").value = '';
+    overlay.querySelector(".EmployeeWorkEnd").value = '';
+    overlay.querySelector(".EmployeePermissions").value = '';
+}
+function hideDialogBox(type, overlay) {
+
+    if (type == 'change')
+    {
+      $.ajax({
+        type:'POST',
+        url: '{% url "stuff" %}',
+        data:
+        {
+          'itemName':itemToChange,
+          'remove':'false',
+          'Name':overlay.parentElement.querySelector('.EmployeeName').value,
+          'EmployeeJobTitle':overlay.parentElement.querySelector('.EmployeeJobTitle').value,
+          'EmployeeSalary':overlay.parentElement.querySelector('EmployeeSalary').value,
+          'EmployeeWorkEnd':overlay.parentElement.querySelector('EmployeeWorkEnd').value,
+          'EmployeeWorkBegan':overlay.parentElement.querySelector('EmployeeWorkBegan').value,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        dataType:'json',
+        success: function (data) {
+          if (data.succeed && data.succeed == 'true') {
+            document.getElementById("overlay").style.display = "none";
+            location.reload(); // TODO
+          }
+        }
+      });
+    }
+    else
+      document.getElementById("overlay").style.display = "none";
+}
+function delEmployee(btn){
+  Employee = btn.parentElement.parentElement.querySelector('#customer-name').innerHTML;
+  $.ajax({
+    type:'POST',
+    url: '{% url "stuff" %}',
+    data:
+    {
+      'action':'remove',
+      'Employee':Employee,
+      csrfmiddlewaretoken: '{{ csrf_token }}'
+    },
+    dataType:'json',
+    success: function(data){
+      if (data.succeed && data.succeed == 'true')
+      {
+        $(btn).parent().parent().remove();
+      }
+    }
+  });
+}
 function changeSalary(input){
     stuff =input.parentElement.parentElement.querySelector('#stuff-name').innerHTML;
     newSalary =input.value;
