@@ -28,7 +28,7 @@ urlpatterns = [
     path('editmenu/', views.editmenu_view, name='editmenu'),
     path('customers/', views.customers_view, name='customers'),
     path('supply/', views.supply_view, name='supply'),
-    path('stuff/', views.stuff_view, name='stuff'),
+    path('employee/', views.employee_view, name='employee'),
     path('activity/<int:id>', views.activity_view, name='activity'),
 
     # ajax views

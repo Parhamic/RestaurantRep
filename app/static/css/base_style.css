@@ -718,12 +718,12 @@ border: 1px solid green;
 .customers tr{
   font-size: 15px;
 }
-/* stuff page */
-.stuff th{background: #8c0000; font-weight: bold;font-size: 16px;}
-.stuff tr{
+/* employee page */
+.employee th{background: #8c0000; font-weight: bold;font-size: 16px;}
+.employee tr{
   font-size: 15px;
 }
-.overlay-container-stuff{
+.overlay-container-employee{
   width:50%;
   border: 1px dashed white;
   margin: 5% auto;

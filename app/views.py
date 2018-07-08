@@ -174,9 +174,43 @@ def supply_view(request):
 	return render(request, 'supply.html')
 
 @login_required
-def stuff_view(request):
-	Employees = Employee.objects.all()
-	return render(request, 'stuff.html',{'Employees':Employees})
+def employee_view(request):
+	if request.method == 'POST':
+		response = {}
+		action = request.POST['action']
+		if action == 'remove':
+			Employee.objects.get(username=request.POST['employee_name']).delete()
+			response['succeed'] = 'true'
+		elif action == 'changeSalary':
+			employee = Employee.objects.get(username=request.POST['employee_name'])
+			if request.POST['salary']:
+				employee.salary = request.POST['salary']
+			if request.POST['workStart']:
+				employee.workStart = request.POST['workStart']
+			else:
+				employee.workStart = None
+			if request.POST['workEnd']:
+				employee.workEnd = request.POST['workEnd']
+			else:
+				employee.workEnd = None
+			employee.save()
+		elif action == 'add':
+			fullName = request.POST['employee_name']
+			employee = Employee.objects.create(username=fullName,
+												first_name=fullName.split(' ')[0],
+												last_name=''.join(x + ' ' for x in fullName.split(' ')[1:]),
+												salary=request.POST['employee_salary'],
+												jobTitle=request.POST['employee_job_title'],
+												workStart=request.POST['employee_work_start'],
+												workEnd=request.POST['employee_work_end']
+												)
+			employee.save()
+			response['succeed'] = 'true'
+
+		return JsonResponse(response)
+
+	employees = Employee.objects.all()
+	return render(request, 'employee.html',{'employees':employees})
 
 
 @login_required
