@@ -37,7 +37,7 @@
       {% for permission in permissions %}
         <div class="permission">
           <p>{{permission}}</p>
-          <input type="checkbox" name="permission">
+          <input type="checkbox" id="perminput" name="permission">
         </div>
         <!-- <div class="clear"></div> -->
       {% endfor%}
@@ -92,6 +92,12 @@ function hideDialogBox(type, overlay) {
 
     if (type == 'add')
     {
+      inputs = overlay.parentElement.querySelectorAll('.permissions .permission');
+      perms = "";
+      for (var i = 0; i < inputs.length, i += 1)
+      {
+        perms += inputs[i].querySelector("#perminput").checked ? "1," : "0,";
+      }
       $.ajax({
         type:'POST',
         url: '{% url "employee" %}',
@@ -103,6 +109,7 @@ function hideDialogBox(type, overlay) {
           'employee_salary':overlay.parentElement.querySelector('.EmployeeSalary').value,
           'employee_work_start':overlay.parentElement.querySelector('.EmployeeWorkBegan').value,
           'employee_work_end':overlay.parentElement.querySelector('.EmployeeWorkEnd').value,
+          'employee_perms':perms,
           csrfmiddlewaretoken: '{{ csrf_token }}'
         },
         dataType:'json',

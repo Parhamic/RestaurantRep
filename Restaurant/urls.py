@@ -28,6 +28,7 @@ urlpatterns = [
     path('editmenu/', views.editmenu_view, name='editmenu'),
     path('customers/', views.customers_view, name='customers'),
     path('supply_order/', views.supply_order_view, name='supply_order'),
+    path('supply_list/', views.supply_list_view, name='supply_list'),
     path('employee/', views.employee_view, name='employee'),
     path('activity/<int:id>', views.activity_view, name='activity'),
 

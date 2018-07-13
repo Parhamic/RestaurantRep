@@ -2,11 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-<<<<<<< HEAD
 from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity, SupplyOrder
-=======
-from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity, Supply
->>>>>>> 201a21f2450bf46a41b48ab405c762cddf5002ac
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils import timezone
@@ -174,7 +170,6 @@ def customers_view(request):
 	return render(request, 'customers.html',{'customers':customers})
 
 @login_required
-<<<<<<< HEAD
 def supply_order_view(request):
 	if request.method == 'POST':
 		name = request.POST['supply_name']
@@ -192,15 +187,10 @@ def supply_list_view(request):
 
 	supplies = SupplyOrder.objects.all()
 	return render(request, 'supply_list.html', {'supplies':supplies})
-=======
-def supply_view(request):
-	supplies = Supply.objects.all()
-	return render(request, 'supply.html',{'supplies':supplies})
->>>>>>> 201a21f2450bf46a41b48ab405c762cddf5002ac
 
 @login_required
 def employee_view(request):
-	permissions = (
+	permissions_names = (
 		"Can add order",
 		"Can see orders",
 		"Can change salary",
@@ -237,11 +227,12 @@ def employee_view(request):
 												workStart=request.POST['employee_work_start'],
 												workEnd=request.POST['employee_work_end']
 												)
-			permissions = request.POST['employee_perms']
+			permissions = request.POST['employee_perms'].split(',')
 			perm_names = Employee.Meta.permissions
 			i = 0
 			for perm in permissions:
-				employee.user_permissions.add(Permission.objects.get(name=perm_names[i][0]))
+				if perm == "1":
+					employee.user_permissions.add(Permission.objects.get(name=perm_names[i][0]))
 				i += 1
 			employee.save()
 			response['succeed'] = 'true'
@@ -249,7 +240,7 @@ def employee_view(request):
 		return JsonResponse(response)
 
 	employees = Employee.objects.all()
-	return render(request, 'employee.html',{'employees':employees, 'permissions':permissions})
+	return render(request, 'employee.html',{'employees':employees, 'permissions':permissions_names})
 
 
 @login_required

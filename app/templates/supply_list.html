@@ -33,7 +33,7 @@
   function addSupply(supply){
     $.ajax({
       type: "POST",
-      url: '{% url "supply" %}',
+      url: '{% url "supply_order" %}',
       data: {
       'supplyName':supply.parentElement.parentElement.querySelector("#supply-name").innerHTML,
       'supplyPrice':supply.parentElement.parentElement.querySelector("#buyp").value,
