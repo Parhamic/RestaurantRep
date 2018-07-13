@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+{% for supply in supplies %}
 <div class="supply">
-  <p id="supply-name">نام ماده</p>
-  <p>وضعیت : ناموجود</p>
-
+  <p id="supply-name">{{supply.name}}</p>
   <div class="buy-box">
     <p>: قیمت خرید</p>
-    <input type="number" id="buyp" name="buy-price"/>
+    <input type="number" id="buyp" name="buy-price" value="{{supply.price}}"/>
     <div class="clear"></div>
 
   </div>
 
   <div class="buy-box">
     <p>: مقدار خرید</p>
-    <input type="number" id="buyn" name="buy-number"/>
+    <input type="number" id="buyn" name="buy-number" value="{{supply.amount}}"/>
     <div class="clear"></div>
 
   </div>
@@ -22,12 +21,8 @@
     <button class="addbtn" onclick="addSupply(this)">ثبت</button>
   </div>
 </div>
-  <div class="supply">
-    {% for supply in supplies %}
-    {{ supply.name }}
-    <p>: وضعیت</p>
-    {% endfor %}
-  </div>
+{% endfor %}
+
   <div class="clear"></div>
 <script>
   function addSupply(supply){
