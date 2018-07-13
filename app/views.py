@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
+<<<<<<< HEAD
 from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity, SupplyOrder
+=======
+from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity, Supply
+>>>>>>> 201a21f2450bf46a41b48ab405c762cddf5002ac
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils import timezone
@@ -170,6 +174,7 @@ def customers_view(request):
 	return render(request, 'customers.html',{'customers':customers})
 
 @login_required
+<<<<<<< HEAD
 def supply_order_view(request):
 	if request.method == 'POST':
 		name = request.POST['supply_name']
@@ -187,9 +192,22 @@ def supply_list_view(request):
 
 	supplies = SupplyOrder.objects.all()
 	return render(request, 'supply_list.html', {'supplies':supplies})
+=======
+def supply_view(request):
+	supplies = Supply.objects.all()
+	return render(request, 'supply.html',{'supplies':supplies})
+>>>>>>> 201a21f2450bf46a41b48ab405c762cddf5002ac
 
 @login_required
 def employee_view(request):
+	permissions = (
+		"Can add order",
+		"Can see orders",
+		"Can change salary",
+		"Can see activities",
+		"Can change materials",
+		"Can add payments"
+	)
 	if request.method == 'POST':
 		response = {}
 		action = request.POST['action']
@@ -231,7 +249,7 @@ def employee_view(request):
 		return JsonResponse(response)
 
 	employees = Employee.objects.all()
-	return render(request, 'employee.html',{'employees':employees})
+	return render(request, 'employee.html',{'employees':employees, 'permissions':permissions})
 
 
 @login_required
