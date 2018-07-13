@@ -116,6 +116,13 @@
           {% endif %}
           {% if perms.app.can_see_activities %}
           <div class="menu_item">
+          <a href="{% url 'supply_order' %}">
+            سفارش مواد اولیه
+          </a>
+          </div>
+          {% endif %}
+          {% if perms.app.can_see_activities %}
+          <div class="menu_item">
           <a href="{% url 'activities' %}">
             گزارشات
           </a>

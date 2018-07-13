@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="supply">
+  <p id="supply-name">نام ماده</p>
+  <p>وضعیت : ناموجود</p>
+
+  <div class="buy-box">
+    <p>: قیمت خرید</p>
+    <input type="number" id="buyp" name="buy-price"/>
+    <div class="clear"></div>
+
+  </div>
+
+  <div class="buy-box">
+    <p>: مقدار خرید</p>
+    <input type="number" id="buyn" name="buy-number"/>
+    <div class="clear"></div>
+
+  </div>
+  <div class="clear"></div>
+  <div class="addbtn-box">
+    <button class="addbtn" onclick="addSupply(this)">ثبت</button>
+  </div>
+</div>
+  <div class="supply">
+    {% for supply in supplies %}
+    {{ supply.name }}
+    <p>: وضعیت</p>
+    {% endfor %}
+  </div>
+  <div class="clear"></div>
+<script>
+  function addSupply(supply){
+    $.ajax({
+      type: "POST",
+      url: '{% url "supply" %}',
+      data: {
+      'supplyName':supply.parentElement.parentElement.querySelector("#supply-name").innerHTML,
+      'supplyPrice':supply.parentElement.parentElement.querySelector("#buyp").value,
+      'supplyNumber':supply.parentElement.parentElement.querySelector("#buyn").value,
+      csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      dataType:'json'
+    });
+  }
+</script>
+{% endblock %}
