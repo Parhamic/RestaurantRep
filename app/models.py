@@ -8,8 +8,9 @@ class Employee(AbstractUser):
 		    ("can_see_orders", "Can see orders"),
 		    ("can_change_salary", "Can change salary"),
 		    ("can_see_activities", "Can see activities"),
-		    ("can_change_materials", "Can change materials"),
 		    ("can_add_payments", "Can add payments"),
+		    ("can_change_menu", "Can change menu"),
+		    ("can_request_supplies", "Can request supplies"),
 		)
 
 	jobTitle = models.CharField(max_length=64, default='مدیر')

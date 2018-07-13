@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
 from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity, SupplyOrder
+from django.contrib.auth.models import Permission
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils import timezone
@@ -196,14 +197,7 @@ def supply_list_view(request):
 
 @login_required
 def employee_view(request):
-	permissions_names = (
-		"Can add order",
-		"Can see orders",
-		"Can change salary",
-		"Can see activities",
-		"Can change materials",
-		"Can add payments"
-	)
+	permissiosn = Employee._meta.permissions
 	if request.method == 'POST':
 		response = {}
 		action = request.POST['action']
@@ -234,18 +228,20 @@ def employee_view(request):
 												workEnd=request.POST['employee_work_end']
 												)
 			permissions = request.POST['employee_perms'].split(',')
-			perm_names = Employee.Meta.permissions
-			i = 0
+			index = 0
 			for perm in permissions:
 				if perm == "1":
-					employee.user_permissions.add(Permission.objects.get(name=perm_names[i][0]))
-				i += 1
+					employee.user_permissions.add(Permission.objects.get(name=permissiosn[index][1]))
+				index = index + 1
 			employee.save()
 			response['succeed'] = 'true'
 
 		return JsonResponse(response)
 
 	employees = Employee.objects.all()
+	permissions_names = []
+	for perm in permissiosn:
+		permissions_names.append(perm[1])
 	return render(request, 'employee.html',{'employees':employees, 'permissions':permissions_names})
 
 

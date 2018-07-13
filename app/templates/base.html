@@ -79,42 +79,35 @@
           </a>
         </div>
           {% endif %}
-          <!-- {% if perms.app.can_change_salary %}
-          <div class="menu_item">
-          <a href="{% url 'order' %}">
-            کارکنان
-          </a>
-        </div>
-          {% endif %} -->
-          {% if perms.app.can_add_payments %}
+          {% if perms.app.can_change_menu %}
           <div class="menu_item">
           <a href="{% url 'editmenu' %}">
             ویرایش منو
           </a>
         </div>
           {% endif %}
-          {% if perms.app.can_see_activities %}
+          {% if perms.app.can_add_order %}
           <div class="menu_item">
           <a href="{% url 'customers' %}">
             مشتریان
           </a>
           </div>
           {% endif %}
-          {% if perms.app.can_see_activities %}
+          {% if perms.app.can_add_payments %}
           <div class="menu_item">
           <a href="{% url 'employee' %}">
             کارکنان
           </a>
           </div>
           {% endif %}
-          {% if perms.app.can_see_activities %}
+          {% if perms.app.can_add_payments %}
           <div class="menu_item">
           <a href="{% url 'supply_list' %}">
             مواد اولیه
           </a>
           </div>
           {% endif %}
-          {% if perms.app.can_see_activities %}
+          {% if perms.app.can_request_supplies %}
           <div class="menu_item">
           <a href="{% url 'supply_order' %}">
             سفارش مواد اولیه
@@ -128,20 +121,6 @@
           </a>
           </div>
           {% endif %}
-          <!-- {% if perms.app.can_change_materials %}
-          <div class="menu_item">
-          <a href="{% url 'order' %}">
-            مواد
-          </a>
-        </div>
-          {% endif %} -->
-          <!-- {% if perms.app.can_add_payments %}
-          <div class="menu_item">
-          <a href="{% url 'order' %}">
-            هزینه ها
-          </a>
-        </div>
-          {% endif %} -->
 
         </div>
         <div>

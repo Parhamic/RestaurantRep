@@ -94,10 +94,11 @@ function hideDialogBox(type, overlay) {
     {
       inputs = overlay.parentElement.querySelectorAll('.permissions .permission');
       perms = "";
-      for (var i = 0; i < inputs.length, i += 1)
+      for (var i = 0; i < inputs.length; i += 1)
       {
         perms += inputs[i].querySelector("#perminput").checked ? "1," : "0,";
       }
+      console.log(perms)
       $.ajax({
         type:'POST',
         url: '{% url "employee" %}',
