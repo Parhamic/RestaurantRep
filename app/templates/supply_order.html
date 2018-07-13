@@ -2,13 +2,15 @@
 {% block content %}
 <p class="page-title">سفارش ماده اولیه  </p>
 <form class="supply-order" action="{% url 'supply_order' %}" method="post">
-   <p>:نام ماده</p><input class="supply-order-input" type="text" name="supply-name" value="">
+   <p>:نام ماده</p><input class="supply-order-input" type="text" name="supply_name" value="">
+   {% csrf_token %}
    <div class="clear"></div>
-    <p>:مقدار ماده</p><input class="supply-order-input" type="Number" name="supply-amount" value="">
+    <p>:مقدار ماده</p><input class="supply-order-input" type="Number" min="0" name="supply_amount" value="">
    <div class="clear"></div>
    <div class="addbtnbox">
      <button class="addbtn" type="submit">ثبت</button>
    </div>
+   <p>{{ msg }}</p>
 </form>
 <div class="clear"></div>
 

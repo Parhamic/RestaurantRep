@@ -171,19 +171,25 @@ def customers_view(request):
 
 @login_required
 def supply_order_view(request):
-	if request.method == 'POST':
+	msg = ''
+	if request.method == 'POST' and request.POST['supply_name'] and request.POST['supply_amount']:
 		name = request.POST['supply_name']
 		amount = request.POST['supply_amount']
 		SupplyOrder.objects.create(name=name, amount=amount)
-	return render(request, 'supply_order.html')
+		msg = 'درخواست ثبت شد'
+	return render(request, 'supply_order.html', {'msg':msg})
 
 @login_required
 def supply_list_view(request):
-	if request.method == 'POST':
+	if request.method == 'POST' and request.POST['supply_id'] and request.POST['supply_price']:
 		id = request.POST['supply_id']
 		supply = SupplyOrder.objects.get(id=id)
 		supply.price = request.POST['supply_price']
 		supply.save()
+		Activity.objects.create(type='خرید',
+								title='خرید محصول ' + supply.name + 'به مقدار ' + supply.amount,
+								description='در تاریخ ' + date2jalali(getNow().date()).strftime('%y/%m/%d'),
+								moneyTrade=supply.price)
 
 	supplies = SupplyOrder.objects.all()
 	return render(request, 'supply_list.html', {'supplies':supplies})
