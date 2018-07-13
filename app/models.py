@@ -61,9 +61,10 @@ class ItemInOrder(models.Model): # Items in orders
 	order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
 	number = models.IntegerField(default=0) # how many of this item is ordered
 
-class Supply(models.Model):
+class SupplyOrder(models.Model):
 	name = models.CharField(max_length=64)
-	available = models.BooleanField(default=False) # do we have this supply enough?
+	amount = models.IntegerField(default=0)
+	price = models.IntegerField(default=0) # 0 = not bought yet
 
 class ConfigurationModel(models.Model):
 	lastOrderDate = models.DateTimeField(auto_now_add=True)

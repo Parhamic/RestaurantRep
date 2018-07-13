@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity
+from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity, SupplyOrder
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils import timezone
@@ -170,8 +170,23 @@ def customers_view(request):
 	return render(request, 'customers.html',{'customers':customers})
 
 @login_required
-def supply_view(request):
-	return render(request, 'supply.html')
+def supply_order_view(request):
+	if request.method == 'POST':
+		name = request.POST['supply_name']
+		amount = request.POST['supply_amount']
+		SupplyOrder.objects.create(name=name, amount=amount)
+	return render(request, 'supply_order.html')
+
+@login_required
+def supply_list_view(request):
+	if request.method == 'POST':
+		id = request.POST['supply_id']
+		supply = SupplyOrder.objects.get(id=id)
+		supply.price = request.POST['supply_price']
+		supply.save()
+
+	supplies = SupplyOrder.objects.all()
+	return render(request, 'supply_list.html', {'supplies':supplies})
 
 @login_required
 def employee_view(request):
@@ -204,6 +219,12 @@ def employee_view(request):
 												workStart=request.POST['employee_work_start'],
 												workEnd=request.POST['employee_work_end']
 												)
+			permissions = request.POST['employee_perms']
+			perm_names = Employee.Meta.permissions
+			i = 0
+			for perm in permissions:
+				employee.user_permissions.add(Permission.objects.get(name=perm_names[i][0]))
+				i += 1
 			employee.save()
 			response['succeed'] = 'true'
 

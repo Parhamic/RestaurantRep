@@ -27,7 +27,7 @@ urlpatterns = [
     path('activities/', views.activities_view, name='activities'),
     path('editmenu/', views.editmenu_view, name='editmenu'),
     path('customers/', views.customers_view, name='customers'),
-    path('supply/', views.supply_view, name='supply'),
+    path('supply_order/', views.supply_order_view, name='supply_order'),
     path('employee/', views.employee_view, name='employee'),
     path('activity/<int:id>', views.activity_view, name='activity'),
 
