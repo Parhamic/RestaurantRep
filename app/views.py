@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
-from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity
+from .models import Employee, Item, ItemInOrder, Customer, Order, ConfigurationModel, Activity, Supply
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils import timezone
@@ -171,10 +171,19 @@ def customers_view(request):
 
 @login_required
 def supply_view(request):
-	return render(request, 'supply.html')
+	supplies = Supply.objects.all()
+	return render(request, 'supply.html',{'supplies':supplies})
 
 @login_required
 def employee_view(request):
+	permissions = (
+		"Can add order",
+		"Can see orders",
+		"Can change salary",
+		"Can see activities",
+		"Can change materials",
+		"Can add payments"
+	)
 	if request.method == 'POST':
 		response = {}
 		action = request.POST['action']
@@ -210,7 +219,7 @@ def employee_view(request):
 		return JsonResponse(response)
 
 	employees = Employee.objects.all()
-	return render(request, 'employee.html',{'employees':employees})
+	return render(request, 'employee.html',{'employees':employees, 'permissions':permissions})
 
 
 @login_required

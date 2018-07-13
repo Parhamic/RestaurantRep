@@ -5,6 +5,7 @@
 <div id="overlay">
   <div class="overlay-container-employee">
     <div class=""><h1>ویرایش نام محصول </h1></div>
+  <div id="inputs">
     <div class="overlaytext">
       <p>: نام کارمند</p>
     </div>
@@ -30,8 +31,19 @@
        <p>: ساعت اتمام کار</p>
     </div>
     <input class="EmployeeWorkEnd" type="time">
-    <div class="clear"></div>
+  </div>
+    <div class="permissions">
+      <p id="permission-title">: دسترسی ها</p>
+      {% for permission in permissions %}
+        <div class="permission">
+          <p>{{permission}}</p>
+          <input type="checkbox" name="permission">
+        </div>
+        <!-- <div class="clear"></div> -->
+      {% endfor%}
+    </div>
 
+    <div class="clear"></div>
     <button id="edit" class="editbtn" onclick="hideDialogBox('add', this)" >افزودن</button>
     <button id="cancel" class="editbtn" onclick="hideDialogBox('cancel', this)" >انصراف</button>
   </div>
